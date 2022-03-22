@@ -8,7 +8,11 @@
         web application, we will try to help them by training their brain and
         memory.
       </p>
+      <select>
+        <option value="">hola</option>
+      </select>
     </section>
+
     <section class="buttons">
       <router-link to="/exercises">
         <button class="startb">Start</button>
