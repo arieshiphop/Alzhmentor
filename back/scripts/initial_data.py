@@ -9,9 +9,9 @@ from src.domain.users import UsersRepository, User
 database_path = "data/alzhmentor.db"
 
 
-federico = User(id="user-1", user_name="fede_hola", log_id="user-1")
+federico = User(id="user-1", user_name="fede_hola", password="b", log_id="user-1")
 
-josu = User(id="user-2", user_name="Josu hello", log_id="user-2")
+josu = User(id="user-2", user_name="Josu hello", password="a", log_id="user-2")
 
 user_repository = UsersRepository(database_path)
 user_repository.save(federico)
