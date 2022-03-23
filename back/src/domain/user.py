@@ -2,28 +2,19 @@ import sqlite3
 
 
 class User:
-    def __init__(
-        self,
-        id,
-        user_name,
-        log_id=0,
-        password="EMPTY PASSWORD",
-    ):
+    def __init__(self, id, name, password="NO-PASSWORD"):
         self.id = id
-        self.user_name = user_name
+        self.name = name
         self.password = password
-        self.log_id = log_id
 
     def to_dict(self):
         return {
             "id": self.id,
-            "user_name": self.user_name,
-            "password": self.password,
-            "log_id": self.log_id,
+            "name": self.name,
         }
 
 
-class UsersRepository:
+class UserRepository:
     def __init__(self, database_path):
         self.database_path = database_path
         self.init_tables()
@@ -36,24 +27,24 @@ class UsersRepository:
     def init_tables(self):
         sql = """
             create table if not exists users (
-                id varchar PRIMARY KEY,
-                user_name text,
-                password text,
-                log_id text                
-                )
-                """
+                id varchar primary key,
+                name varchar,
+                password varchar
+            )
+        """
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(sql)
         conn.commit()
 
-    def get_users(self):
+    def get_all(self):
         sql = """select * from users"""
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(sql)
 
         data = cursor.fetchall()
+
         users = [User(**item) for item in data]
         return users
 
@@ -72,17 +63,14 @@ class UsersRepository:
         return user
 
     def save(self, user):
-        sql = """insert into users (id,user_name,password,log_id) values (:id, :user_name,:password:log_id) """
+        sql = """insert into users (id, name,password) values (
+            :id, :name, :password
+        ) """
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(
             sql,
-            {
-                "id": user.id,
-                "name": user.name,
-                "password": user.password,
-                "log_id": user.log_id,
-            },
+            {"id": user.id, "name": user.name, "password": user.password}
+            # { **user.to_dict(), 'password': user.password}
         )
-
         conn.commit()

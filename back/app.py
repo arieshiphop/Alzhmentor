@@ -1,13 +1,18 @@
 import sqlite3
 from src.webserver import create_app
-from src.domain.users import UsersRepository
+from src.domain.info import InfoRepository
+from src.domain.contact import ContactRepository
+from src.domain.user import UserRepository
 
-database_path = "data/alzhmentor.db"
+
+database_path = "data/database.db"
 
 repositories = {
-    "user": UsersRepository(database_path),
+    "info": InfoRepository(database_path),
+    "contacts": ContactRepository(database_path),
+    "users": UserRepository(database_path),
 }
 
 app = create_app(repositories)
 
-app.run(debug=False, host="0.0.0.0", port="5000")
+app.run(debug=True, host="0.0.0.0", port="5000")
