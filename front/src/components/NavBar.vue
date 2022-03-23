@@ -6,8 +6,9 @@
       ><span class="nav-icon"></span
     ></label>
     <ul class="menu">
-      <li><a href="#dont">About</a></li>
-      <li><a href="#forget">Contact</a></li>
+      <li><a href="#">Home</a></li>
+      <li><a href="#exercises">Exercises</a></li>
+      <li><a href="#profile">Profile</a></li>
     </ul>
   </header>
 </template>
@@ -42,7 +43,7 @@ a {
   box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
   position: fixed;
   width: 100%;
-  z-index: 3;
+  z-index: 99999;
 }
 
 .header ul {

@@ -8,14 +8,17 @@
         web application, we will try to help them by training their brain and
         memory.
       </p>
-      <select>
-        <option value="">hola</option>
-      </select>
+      <section class="field">
+        <label>User:</label>
+        <input type="text" v-model="user" />
+        <label>Password:</label>
+        <input type="password" v-model="password" />
+      </section>
     </section>
 
     <section class="buttons">
       <router-link to="/exercises">
-        <button class="startb">Start</button>
+        <button @click="onButtonClicked" class="startb">Login</button>
       </router-link>
       <button class="seemoreb">See more</button>
     </section>
@@ -24,11 +27,37 @@
 
 <script>
 // @ is an alias to /src
+import { useStorage } from "@vueuse/core";
+import { login } from "@/services/auth.js";
 
 export default {
   name: "HomePage",
+  data() {
+    return {
+      user: "",
+      password: "",
+      localUser: useStorage("user", {}),
+    };
+  },
+  methods: {
+    async onButtonClicked() {
+      const response = await login(this.user, this.password);
+      const loginStatus = response.status;
+      const loginUser = await response.json();
+      console.log(loginStatus);
+      if (response.status === 401) {
+        alert("unauthorized");
+      } else {
+        this.localUser = loginUser;
+        localStorage.setItem("user", JSON.stringify(this.localUser));
+        this.$router.push("/exercises");
+      }
+    },
+  },
 };
 </script>
+
+
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 $bg: #0c0e0e;
@@ -126,5 +155,48 @@ button:hover {
     border: transparent;
     box-shadow: 2px 2px 4px black;
   }
+}
+.field {
+  color: black;
+  margin-top: 2rem;
+  display: flex;
+  flex-flow: column;
+  text-align: center;
+}
+
+label,
+input {
+  transition: all 200ms ease;
+}
+
+input {
+  font-size: 1.2rem;
+  border: 0;
+  border-bottom: 1px solid #ccc;
+  -webkit-appearance: none;
+  border-radius: 0;
+  padding: 5px 0;
+  &:focus {
+    outline: 0;
+    border-color: coral;
+  }
+  &:placeholder-shown {
+    color: red;
+    cursor: text;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform-origin: left bottom;
+    transform: translate(0, 2.125em) scale(1.5);
+  }
+}
+
+label {
+  color: #ccc;
+}
+
+::-webkit-input-placeholder {
+  opacity: 0;
+  transition: inherit;
 }
 </style>
