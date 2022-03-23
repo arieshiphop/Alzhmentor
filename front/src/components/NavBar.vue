@@ -1,6 +1,13 @@
 <template>
   <header class="header">
-    <a href="/" class="logo">Alzhmentor</a>
+    <a href="/" class="logo">
+      <img class="normal-logo" src="../assets/logo.png" alt="Alzhmentor logo" />
+      <img
+        class="small-logo"
+        src="../assets/logoonly.png"
+        alt="Small alzhmenetor logo"
+      />
+    </a>
     <input class="menu-btn" type="checkbox" id="menu-btn" />
     <label class="menu-icon" for="menu-btn"
       ><span class="nav-icon"></span
@@ -31,13 +38,20 @@ body {
   font-family: Helvetica, sans-serif;
   background-color: #bbb;
 }
-
+.logo {
+  width: 15rem;
+}
+.logo img {
+  width: 100%;
+}
 a {
   color: #000;
 }
 
 /* header */
-
+.small-logo {
+  display: none;
+}
 .header {
   background-color: #fff;
   box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.1);
@@ -67,11 +81,8 @@ a {
 }
 
 .header .logo {
-  display: block;
   float: left;
-  font-size: 2em;
   padding: 10px 20px;
-  text-decoration: none;
 }
 
 /* menu */
@@ -160,6 +171,17 @@ a {
   }
   .header .menu-icon {
     display: none;
+  }
+}
+@media (max-width: 30em) {
+  .normal-logo {
+    display: none;
+  }
+  .logo img {
+    width: 10vw;
+  }
+  .small-logo {
+    display: block;
   }
 }
 </style>
