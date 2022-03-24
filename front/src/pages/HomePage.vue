@@ -1,18 +1,23 @@
 <template>
+  <NavBar></NavBar>
   <main>
     <section class="first-content">
-      <h1 style="color: white">Alzhmentor</h1>
+      <img src="../assets/logo.png" alt="" />
       <p>
         Recently, there have been many people who have witnessed their loved
-        ones suffering from Alzheimer's and other forms of dementia. Through a
-        web application, we will try to help them by training their brain and
-        memory.
+        ones suffering from Alzheimer's and other forms of dementia 👩‍🦳. Through
+        a web application, we will try to help them by training their brain and
+        memory 🧠.
       </p>
       <section class="field">
-        <label>User:</label>
-        <input type="text" v-model="user" />
-        <label>Password:</label>
-        <input type="password" v-model="password" />
+        <span class="p-float-label">
+          <InputText id="username" type="text" v-model="user" />
+          <label for="username">Username</label>
+        </span>
+        <span class="p-float-label">
+          <InputText id="username" type="password" v-model="password" />
+          <label for="password">password</label>
+        </span>
       </section>
     </section>
 
@@ -29,9 +34,15 @@
 // @ is an alias to /src
 import { useStorage } from "@vueuse/core";
 import { login } from "@/services/auth.js";
+import NavBar from "@/components/NavBar";
+import InputText from "primevue/inputtext";
 
 export default {
   name: "HomePage",
+  components: {
+    NavBar,
+    InputText,
+  },
   data() {
     return {
       user: "",
@@ -62,10 +73,13 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 $bg: #0c0e0e;
 $blue-grey: #1a3a38;
-$pink: #f87390;
+$pink: #fab4cb;
 $meat: #dfc19d;
 $yellow-white: #e5e7b5;
 
+.p-float-label {
+  margin-top: 1rem;
+}
 main {
   font-family: Montserrat;
   display: flex;
@@ -75,25 +89,18 @@ main {
   text-align: center;
   width: 100vw;
   height: 100vh;
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  background-image: url(../assets/old-man.jpg);
-  background-repeat: no-repeat;
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
   .first-content {
-    margin-top: -4rem;
     height: 80vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 
-    h1 {
-      color: $pink !important;
-      font-size: 6vw;
-      text-shadow: 2px 2px 4px black;
-      font-family: Montserrat;
+    img {
+      width: 40vw;
+      margin-bottom: 3rem;
     }
     p {
       background: rgba(0, 0, 0, 0.8);
@@ -103,16 +110,17 @@ main {
       text-shadow: 1px 1px 4px black;
       width: 60%;
       font-weight: bold;
-      font-size: 1.4vw;
       padding: 1.2rem;
+      line-height: 3;
     }
   }
 }
+
 button:hover {
-  transform: scale(1.1);
   cursor: pointer;
   font-weight: bold;
 }
+
 ::selection {
   color: $pink;
   background: $blue-grey;
@@ -127,6 +135,12 @@ button:hover {
     h1 {
       font-size: 3rem;
     }
+    img {
+      width: 80vw;
+    }
+    p {
+      line-height: 1;
+    }
   }
   main .first-content p {
     font-size: 5vw;
@@ -138,14 +152,17 @@ button:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-top: -4rem;
+  margin-top: -4vh;
+  transition: 0.2s ease-in;
   .startb {
-    background: dodgerblue;
+    background: #1e90ff;
     width: 10rem;
     border-radius: 4px;
     height: 3rem;
     border: transparent;
     box-shadow: 2px 2px 4px black;
+    color: white;
+    text-shadow: 0px 1px 2px black;
   }
   .seemoreb {
     background: $pink;
@@ -154,49 +171,14 @@ button:hover {
     height: 3rem;
     border: transparent;
     box-shadow: 2px 2px 4px black;
+    color: white;
+    text-shadow: 0px 1px 2px black;
   }
 }
 .field {
   color: black;
   margin-top: 2rem;
   display: flex;
-  flex-flow: column;
-  text-align: center;
-}
-
-label,
-input {
-  transition: all 200ms ease;
-}
-
-input {
-  font-size: 1.2rem;
-  border: 0;
-  border-bottom: 1px solid #ccc;
-  -webkit-appearance: none;
-  border-radius: 0;
-  padding: 5px 0;
-  &:focus {
-    outline: 0;
-    border-color: coral;
-  }
-  &:placeholder-shown {
-    color: red;
-    cursor: text;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transform-origin: left bottom;
-    transform: translate(0, 2.125em) scale(1.5);
-  }
-}
-
-label {
-  color: #ccc;
-}
-
-::-webkit-input-placeholder {
-  opacity: 0;
-  transition: inherit;
+  flex-direction: column;
 }
 </style>

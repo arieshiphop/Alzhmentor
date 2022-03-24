@@ -12,9 +12,8 @@ def setup():
     client = app.test_client()
 
     tomas = User(id='user-tomas', name='Tomás', password='el mejor')
-    log_1 = Log(log_id=44,id='user-tomas',dinero_ofrecido=27.33,dinero_entregado=29.12,hora=22.31,completado=True)
     user_repository.save(tomas)
-    logs_repository.save(log_1)
+    
 
     return client
 
@@ -30,11 +29,11 @@ def test_log_should_be_connected_to_user():
         "completado":True
     }
     response = client.post(
-        "/api/users/logs", json=body
+        "/api/users/user-tomas/logs", json=body
     )
 
     response_get = client.get(
-        "/api/users/logs"
+        "/api/users/user-tomas/logs"
     )
     assert response.status_code == 200
     assert response_get.json == [
@@ -46,3 +45,23 @@ def test_log_should_be_connected_to_user():
         "completado":1}
         ]
 
+# def test_user_can_not_get_other_user_logs():
+#     client = setup()
+
+#     body = {
+#         "log_id": '44',
+#         "id":"user-asier",
+#         "dinero_ofrecido":27.33,
+#         "dinero_entregado":29.12,
+#         "hora":22.31,
+#         "completado":True
+#     }
+#     response = client.post(
+#         "/api/users/user-asier/logs", json=body
+#     )
+
+#     response_get = client.get(
+#         "/api/users/user-asier/logs"
+#     )
+#     assert response_get.status_code == 403
+#     assert response_get.json == []

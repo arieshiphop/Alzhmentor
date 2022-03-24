@@ -34,16 +34,21 @@ def create_app(repositories):
     def user_save_logs(userid):
         
         body = request.json
-        log = Log(
-            log_id=body['log_id'],
-            id=body["id"],
-            dinero_ofrecido=body['dinero_ofrecido'],
-            dinero_entregado=body['dinero_entregado'],
-            hora=body['hora'],
-            completado=body['completado'])
 
-        repositories["logs"].save(log)
+        if userid == body['id']:
 
-        return ""
+            log = Log(
+                log_id=body['log_id'],
+                id=body["id"],
+                dinero_ofrecido=body['dinero_ofrecido'],
+                dinero_entregado=body['dinero_entregado'],
+                hora=body['hora'],
+                completado=body['completado'])
+
+            repositories["logs"].save(log)
+
+            return "",200
+        else:
+            return "",403
 
     return app

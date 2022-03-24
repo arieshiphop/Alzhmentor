@@ -62,6 +62,7 @@ import { useStorage } from "@vueuse/core";
 import { getUser } from "@/services/api.js";
 import config from "@/config.js";
 import NavBar from "@/components/NavBar";
+
 export default {
   components: {
     NavBar,
@@ -105,6 +106,8 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 25rem), 1fr));
 }
 .log-container article {
+  background: rgba(255, 255, 255, 0.6);
+
   padding: 2rem;
   text-align: center;
   box-shadow: 2px 2px 4px black;
