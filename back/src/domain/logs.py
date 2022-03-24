@@ -2,7 +2,7 @@ import sqlite3
 
 
 class Log:
-    def __init__(self, log_id, id,dinero_ofrecido,dinero_entregado,hora,completado):
+    def __init__(self, log_id, id, dinero_ofrecido, dinero_entregado, hora, completado):
         self.log_id = log_id
         self.id = id
         self.dinero_ofrecido = dinero_ofrecido
@@ -12,12 +12,12 @@ class Log:
 
     def to_dict(self):
         return {
-            "log_id":self.log_id,
+            "log_id": self.log_id,
             "id": self.id,
-            "dinero_ofrecido":self.dinero_ofrecido,
-            "dinero_entregado":self.dinero_entregado,
-            "hora":self.hora,
-            "completado":self.completado
+            "dinero_ofrecido": self.dinero_ofrecido,
+            "dinero_entregado": self.dinero_entregado,
+            "hora": self.hora,
+            "completado": self.completado
         }
 
 
@@ -47,11 +47,11 @@ class LogsRepository:
         cursor.execute(sql)
         conn.commit()
 
-    def get_all(self):
-        sql = """select * from logs"""
+    def get_all(self, user_id):
+        sql = """select * from logs where id =:user_id"""
         conn = self.create_conn()
         cursor = conn.cursor()
-        cursor.execute(sql)
+        cursor.execute(sql, {"user_id": user_id})
 
         data = cursor.fetchall()
 
@@ -80,7 +80,7 @@ class LogsRepository:
         cursor = conn.cursor()
         cursor.execute(
             sql,
-            
-            { **log.to_dict()}
+
+            {**log.to_dict()}
         )
         conn.commit()

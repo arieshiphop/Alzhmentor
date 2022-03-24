@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomePage from '../pages/HomePage.vue'
 import ExercisesPage from '../pages/ExercisesPage.vue'
 import ProfilePage from '../pages/ProfilePage'
-
+import PaymentsPage from '../pages/PaymentsPage.vue'
 const routes = [
   {
     path: '/',
@@ -18,7 +18,13 @@ const routes = [
     path: "/profile",
     name: "ProfilePage",
     component:ProfilePage
+  },
+  {
+    path: "/exercises/payments",
+    name: "PaymentsPage",
+    component:PaymentsPage
   }
+  
 ]
 
 const router = createRouter({

@@ -4,33 +4,14 @@
     <section>
       <h1>What do you want to train today?</h1>
       <article>
-        <div class="redondel">
-          <img
-            src="https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1024-512,f_auto,q_auto:best/newscms/2018_24/2462811/180612-memory-ideas-tricks-devices-ac-451p.jpg"
-            alt=""
-          />
-          <p>Memory</p>
-        </div>
-        <div class="redondel">
-          <img
-            src="https://stimuluspro.com/www/book/imagenes/911/lenguaje.png"
-            alt=""
-          />
-          <p>Languaje</p>
-        </div>
-        <div class="redondel">
-          <img
-            src="https://blog.neuronup.com/wp-content/uploads/2019/07/atencion.jpg"
-            alt=""
-          />
-          <p>Attention</p>
-        </div>
-        <div class="redondel">
-          <img
-            src="https://ecommercenews.eu/wp-content/uploads/2013/06/most_common_payment_methods_in_europe.png"
-            alt=""
-          />
-          <p>Payments</p>
+        <div
+          class="redondel"
+          v-for="exercise in exercises"
+          :key="exercise.name"
+          @click="onExerciseClick(exercise)"
+        >
+          <img :src="exercise.img" alt="{{exercise.name}}" />
+          <p>{{ exercise.name }}</p>
         </div>
       </article>
     </section>
@@ -42,6 +23,33 @@ import NavBar from "@/components/NavBar";
 export default {
   components: {
     NavBar,
+  },
+  data() {
+    return {
+      exercises: [
+        {
+          name: "Memory",
+          img: "https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1024-512,f_auto,q_auto:best/newscms/2018_24/2462811/180612-memory-ideas-tricks-devices-ac-451p.jpg",
+        },
+        {
+          name: "Language",
+          img: "https://stimuluspro.com/www/book/imagenes/911/lenguaje.png",
+        },
+        {
+          name: "Attention",
+          img: "https://blog.neuronup.com/wp-content/uploads/2019/07/atencion.jpg",
+        },
+        {
+          name: "Payments",
+          img: "https://ecommercenews.eu/wp-content/uploads/2013/06/most_common_payment_methods_in_europe.png",
+        },
+      ],
+    };
+  },
+  methods: {
+    onExerciseClick(exercise) {
+      this.$router.push(`/exercises/${exercise.name.toLowerCase()}`);
+    },
   },
 };
 </script>
@@ -61,6 +69,7 @@ section {
   height: 90vh;
   h1 {
     text-align: center;
+    text-shadow: 0px 0px 4px black;
     color: dodgerblue;
     font-size: 2rem;
     font-family: Montserrat;

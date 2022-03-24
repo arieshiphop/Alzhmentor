@@ -4,6 +4,7 @@ from src.webserver import create_app
 
 from src.domain.user import UserRepository, User
 
+
 def setup():
     user_repository = UserRepository(temp_file())
     app = create_app(repositories={"users": user_repository})
@@ -13,6 +14,7 @@ def setup():
     user_repository.save(tomas)
 
     return client
+
 
 def test_should_validate_login():
     client = setup()
@@ -31,6 +33,7 @@ def test_should_validate_login():
         'name': 'Tomás'
     }
 
+
 def test_should_fail_if_invalid_password():
     client = setup()
 
@@ -43,6 +46,7 @@ def test_should_fail_if_invalid_password():
     )
 
     assert response.status_code == 401
+
 
 def test_should_fail_if_user_not_exists():
     client = setup()

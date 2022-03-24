@@ -42,13 +42,13 @@
           </ul>
         </div>
         <section class="log-container">
-          <article>
-            <h1>Log-1</h1>
+          <article v-for="log in logs" :key="log.id">
+            <h1>Log-{{ log.log_id }}</h1>
             <ul>
-              <li>Dinero entrante: 25.23$</li>
-              <li>Dinero ofrecido: 28.38$</li>
-              <li>Hora: 22:03</li>
-              <li>Completado: No</li>
+              <li>Entry money: {{ log.dinero_entregado }}$</li>
+              <li>Gived money: {{ log.dinero_ofrecido }}$</li>
+              <li>Hour: {{ log.hora }}</li>
+              <li>Completed: {{ log.completado }}</li>
             </ul>
           </article>
         </section>
@@ -60,6 +60,7 @@
 <script>
 import { useStorage } from "@vueuse/core";
 import { getUser } from "@/services/api.js";
+import config from "@/config.js";
 import NavBar from "@/components/NavBar";
 export default {
   components: {
@@ -68,14 +69,23 @@ export default {
   data() {
     return {
       userName: "",
+      logs: [],
     };
   },
   mounted() {
     this.getUserData();
+    this.getUserLogs(this.userName.id);
+    console.log(this.logs);
   },
   methods: {
     async getUserData() {
       this.userName = getUser();
+    },
+    async getUserLogs(userId) {
+      let response = await fetch(`${config.API_PATH}/users/${userId}/logs`);
+      let data = await response.json();
+      console.log("data", data);
+      this.logs = data;
     },
   },
 };

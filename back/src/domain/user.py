@@ -29,7 +29,8 @@ class UserRepository:
             create table if not exists users (
                 id varchar primary key,
                 name varchar,
-                password varchar
+                password varchar,
+                FOREIGN KEY (id) REFERENCES logs(id)
             )
         """
         conn = self.create_conn()

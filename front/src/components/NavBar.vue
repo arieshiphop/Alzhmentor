@@ -33,11 +33,7 @@ export default {
 * {
   font-family: Montserrat;
 }
-body {
-  margin: 0;
-  font-family: Helvetica, sans-serif;
-  background-color: #bbb;
-}
+
 .logo {
   width: 15rem;
 }
