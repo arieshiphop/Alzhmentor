@@ -30,9 +30,9 @@ def create_app(repositories):
         all_logs = repositories["logs"].get_all(userid)
         return object_to_json(all_logs)
 
-    @app.route("/api/users/logs", methods=["POST"])
-    def user_save_logs():
-
+    @app.route("/api/users/<userid>/logs", methods=["POST"])
+    def user_save_logs(userid):
+        
         body = request.json
         log = Log(
             log_id=body['log_id'],

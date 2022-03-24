@@ -75,7 +75,6 @@ export default {
   mounted() {
     this.getUserData();
     this.getUserLogs(this.userName.id);
-    console.log(this.logs);
   },
   methods: {
     async getUserData() {
@@ -84,7 +83,6 @@ export default {
     async getUserLogs(userId) {
       let response = await fetch(`${config.API_PATH}/users/${userId}/logs`);
       let data = await response.json();
-      console.log("data", data);
       this.logs = data;
     },
   },
