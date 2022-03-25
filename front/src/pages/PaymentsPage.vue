@@ -2,9 +2,9 @@
   <NavBar></NavBar>
   <main>
     <section>
-      <h1>Money to pay: {{ startMoney }}</h1>
-      <h2>Paid money: {{ givedMoney }}</h2>
-      
+      <h1>Money to pay: {{ startMoney }} 💵</h1>
+      <h2>Paid money: {{ givedMoney }} 💸</h2>
+
       <!-- <h2 v-if="startMoney == givedMoney" style="color: green">Completado</h2>
       <h2 v-else style="color: red">Equivocado</h2> -->
       <article class="parent">
@@ -41,7 +41,6 @@ export default {
       startMoney: "",
       givedMoney: 0.0,
       money: coins,
-      showingModal: false,
     };
   },
   mounted() {
@@ -72,8 +71,6 @@ export default {
           });
           await sendLogToProfile(this.startMoney, this.givedMoney, false);
         }
-        this.showingModal = true;
-        this.$emit("coin-added", this.showingModal);
         this.createRandomPrice();
         this.givedMoney = 0.0;
       }

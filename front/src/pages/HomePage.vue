@@ -9,16 +9,22 @@
         a web application, we will try to help them by training their brain and
         memory 🧠.
       </p>
-      <section class="field">
+      <form class="field">
         <span class="p-float-label">
           <InputText id="username" type="text" v-model="user" />
           <label for="username">Username</label>
         </span>
         <span class="p-float-label">
-          <InputText id="username" type="password" v-model="password" />
+          <InputText
+            id="password"
+            type="password"
+            v-model="password"
+            @keyup.enter="onButtonClicked()"
+            autocomplete="password"
+          />
           <label for="password">password</label>
         </span>
-      </section>
+      </form>
     </section>
 
     <section class="buttons">
@@ -139,7 +145,7 @@ button:hover {
       width: 80vw;
     }
     p {
-      line-height: 1;
+      line-height: 1.4;
     }
   }
   main .first-content p {

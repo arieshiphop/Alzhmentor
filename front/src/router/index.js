@@ -3,9 +3,10 @@ import HomePage from '../pages/HomePage.vue'
 import ExercisesPage from '../pages/ExercisesPage.vue'
 import ProfilePage from '../pages/ProfilePage'
 import PaymentsPage from '../pages/PaymentsPage.vue'
+import RegLogPage from '../pages/Reg-LogPage.vue'
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'HomePage',
     component: HomePage
   },
@@ -23,6 +24,11 @@ const routes = [
     path: "/exercises/payments",
     name: "PaymentsPage",
     component:PaymentsPage
+  },
+  {
+    path: "/",
+    name: "RegLogPage",
+    component:RegLogPage
   }
   
 ]

@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <a href="/" class="logo">
+    <a href="/home" class="logo">
       <img class="normal-logo" src="../assets/logo.png" alt="Alzhmentor logo" />
       <img
         class="small-logo"
@@ -13,7 +13,8 @@
       ><span class="nav-icon"></span
     ></label>
     <ul class="menu">
-      <li><a href="#">Home</a></li>
+      <li><a href="#">Reg/Log</a></li>
+      <li><a href="#home">Home</a></li>
       <li><a href="#exercises">Exercises</a></li>
       <li><a href="#profile">Profile</a></li>
     </ul>
