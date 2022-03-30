@@ -6,7 +6,7 @@ import PaymentsPage from '../pages/PaymentsPage.vue'
 import RegisterPage from '../pages/RegisterPage.vue'
 const routes = [
   {
-    path: '/home',
+    path: '/',
     name: 'HomePage',
     component: HomePage
   },

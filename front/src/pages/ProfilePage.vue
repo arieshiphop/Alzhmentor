@@ -34,11 +34,23 @@
       <div class="right-side">
         <div class="nav">
           <ul>
-            <li class="user-post active">Log</li>
-            <li class="user-setting">Settings</li>
+            <li
+              class="user-post"
+              v-bind:class="{ active: showLogs }"
+              @click="getUserLogs(user.id)"
+            >
+              Log
+            </li>
+            <li
+              class="user-setting"
+              v-bind:class="{ active: showStats }"
+              @click="getUserStats"
+            >
+              Stats
+            </li>
           </ul>
         </div>
-        <section class="log-container">
+        <section v-if="showLogs" class="log-container">
           <article v-for="log in logs" :key="log.id">
             <h1>Log-{{ log.log_id }}</h1>
             <ul>
@@ -49,32 +61,45 @@
             </ul>
           </article>
         </section>
+        <section>
+          <article v-if="showStats" class="stats-container">
+            <h1>Stats</h1>
+          </article>
+        </section>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { useStorage } from "@vueuse/core";
 import { getUser } from "@/services/api.js";
 import config from "@/config.js";
 import NavBar from "@/components/NavBar";
-
 export default {
   components: {
     NavBar,
   },
+
   data() {
     return {
       user: "",
       logs: [],
+      showLogs: true,
+      showStats: false,
     };
   },
   mounted() {
     this.getUserData();
     this.getUserLogs(this.user.id);
   },
+  computed: {},
   methods: {
+    getUserStats() {
+      let failed = this.logs.filter((log) => log.completado == 0);
+      let completed = this.logs.filter((log) => log.completado == 1);
+      this.showLogs = false;
+      this.showStats = true;
+    },
     async getUserData() {
       this.user = getUser();
     },
@@ -82,6 +107,8 @@ export default {
       let response = await fetch(`${config.API_PATH}/users/${userId}/logs`);
       let data = await response.json();
       this.logs = data;
+      this.showLogs = true;
+      this.showStats = false;
     },
   },
 };
@@ -96,6 +123,15 @@ export default {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
+.stats-container {
+  width: 100%;
+}
+.stats-container .p-chart {
+  width: 100%;
+  height: 40vh;
+}
+
 .log-container {
   display: grid;
   gap: 1rem;

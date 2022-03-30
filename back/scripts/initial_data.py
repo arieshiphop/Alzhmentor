@@ -19,7 +19,7 @@ user_repository.save(User(id="user-2", name="Asier", password="no tan mejor",
 
 log_repository = LogsRepository(database_path)
 log_repository.save(Log(log_id=44, id='user-1', dinero_ofrecido=27.33,
-                    dinero_entregado=29.12, hora=22.31, completado=False))
+                    dinero_entregado=29.12, hora=22.31, completado=False,mes="Enero"))
 log_repository.save(Log(log_id=52, id='user-1', dinero_ofrecido=14.03,
-                    dinero_entregado=10.12, hora=15.35, completado=False))
+                    dinero_entregado=10.12, hora=15.35, completado=False,mes="Enero"))
 print("Base de datos inicializada en " + database_path)

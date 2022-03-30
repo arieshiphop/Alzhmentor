@@ -16,7 +16,13 @@ function getActualHour() {
 
     return hour + ":" + minutes
 }
+function getActualMonth() {
+    const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
+    const d = new Date();
+    let name = month[d.getMonth()];
+    return name
+}
 export async function sendLogToProfile(dinero_entregado, dinero_ofrecido, completado) {
     let id = getUser()
     const settings = {
@@ -30,7 +36,8 @@ export async function sendLogToProfile(dinero_entregado, dinero_ofrecido, comple
             dinero_entregado: dinero_entregado,
             dinero_ofrecido: dinero_ofrecido,
             hora: getActualHour(),
-            completado:completado
+            completado: completado,
+            mes:getActualMonth()
         }),
 
     };

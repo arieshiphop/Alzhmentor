@@ -28,9 +28,7 @@
     </section>
 
     <section class="buttons">
-      <router-link to="/exercises">
-        <button @click="onButtonClicked" class="startb">Login</button>
-      </router-link>
+      <button @click="onButtonClicked" class="startb">Login</button>
       <button class="seemoreb">See more</button>
     </section>
   </main>
@@ -42,6 +40,7 @@ import { useStorage } from "@vueuse/core";
 import { login } from "@/services/auth.js";
 import NavBar from "@/components/NavBar";
 import InputText from "primevue/inputtext";
+import { okAlert, onError } from "@/services/alerts.js";
 export default {
   name: "HomePage",
   components: {
@@ -58,15 +57,14 @@ export default {
   methods: {
     async onButtonClicked() {
       const response = await login(this.user, this.password);
-      const loginStatus = response.status;
-      const loginUser = await response.json();
-      console.log(loginStatus);
-      if (response.status === 401) {
-        alert("unauthorized");
+
+      if (response.statusText.toLowerCase() == "unauthorized") {
+        onError("Bad", "Username or password is incorrect");
       } else {
+        const loginUser = await response.json();
         this.localUser = loginUser;
         localStorage.setItem("user", JSON.stringify(this.localUser));
-        this.$router.push("/exercises");
+        okAlert("Welcome", "You are logged in", this.$router);
       }
     },
   },
@@ -130,7 +128,7 @@ button:hover {
   color: $pink;
   background: $blue-grey;
 }
-@media screen and(max-width:600px) {
+@media screen and(max-width:1000px) {
   .buttons {
     width: 80vw !important;
     gap: 2rem;
@@ -138,17 +136,35 @@ button:hover {
   main .first-content {
     height: 90vh;
     h1 {
-      font-size: 3rem;
+      font-size: 0.3rem;
     }
-    img {
-      width: 80vw;
-    }
+
     p {
-      line-height: 1.4;
+      line-height: 1;
     }
   }
   main .first-content p {
-    font-size: 5vw;
+    font-size: 3vw;
+    width: 80%;
+  }
+}
+@media screen and(max-width:600px) {
+  .buttons {
+    width: 80vw !important;
+    gap: 2rem;
+  }
+  main .first-content {
+    height: 90vh;
+    img {
+      width: 60vw;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      line-height: 1.5;
+    }
+  }
+  main .first-content p {
+    font-size: 3.5vw;
     width: 80%;
   }
 }

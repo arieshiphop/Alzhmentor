@@ -2,13 +2,14 @@ import sqlite3
 
 
 class Log:
-    def __init__(self, log_id, id, dinero_ofrecido, dinero_entregado, hora, completado):
+    def __init__(self, log_id, id, dinero_ofrecido, dinero_entregado, hora, completado,mes):
         self.log_id = log_id
         self.id = id
         self.dinero_ofrecido = dinero_ofrecido
         self.dinero_entregado = dinero_entregado
         self.hora = hora
         self.completado = completado
+        self.mes = mes
 
     def to_dict(self):
         return {
@@ -17,7 +18,8 @@ class Log:
             "dinero_ofrecido": self.dinero_ofrecido,
             "dinero_entregado": self.dinero_entregado,
             "hora": self.hora,
-            "completado": self.completado
+            "completado": self.completado,
+            "mes":self.mes
         }
 
 
@@ -39,7 +41,8 @@ class LogsRepository:
                 dinero_ofrecido double,
                 dinero_entregado double,
                 hora double,
-                completado bool
+                completado bool,
+                mes text
             )
         """
         conn = self.create_conn()
@@ -73,8 +76,8 @@ class LogsRepository:
         return log
 
     def save(self, log):
-        sql = """insert into logs (log_id,id,dinero_entregado,dinero_ofrecido,hora,completado) values (
-            :log_id,:id,:dinero_entregado,:dinero_ofrecido,:hora,:completado
+        sql = """insert into logs (log_id,id,dinero_entregado,dinero_ofrecido,hora,completado,mes) values (
+            :log_id,:id,:dinero_entregado,:dinero_ofrecido,:hora,:completado,:mes
         ) """
         conn = self.create_conn()
         cursor = conn.cursor()

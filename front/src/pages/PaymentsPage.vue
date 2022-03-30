@@ -104,7 +104,6 @@ section {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(25rem, 5rem), 1fr));
   width: 60%;
-  height: 20%;
   background: rgb(130, 122, 122);
   background: linear-gradient(
     45deg,
