@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from src.lib.utils import object_to_json
 from src.domain.logs import Log
+from src.domain.user import User
 
 
 def create_app(repositories):
@@ -25,6 +26,22 @@ def create_app(repositories):
         all_users = repositories["users"].get_all()
         return object_to_json(all_users)
 
+    @app.route("/api/users", methods=["POST"])
+    def register_user():
+        body = request.json
+        user = User(
+            id=body['id'],
+            name=body['name'],
+            password=body['password'],
+            avatar=body['avatar'],
+            email=body['email'],
+            phone=body['phone'],
+            bio=body['bio']
+        )
+        repositories["users"].save(user)
+
+        return user.to_dict(), 200
+
     @app.route("/api/users/<userid>/logs", methods=["GET"])
     def get_all_logs(userid):
         all_logs = repositories["logs"].get_all(userid)
@@ -32,7 +49,7 @@ def create_app(repositories):
 
     @app.route("/api/users/<userid>/logs", methods=["POST"])
     def user_save_logs(userid):
-        
+
         body = request.json
 
         if userid == body['id']:
@@ -47,8 +64,8 @@ def create_app(repositories):
 
             repositories["logs"].save(log)
 
-            return "",200
+            return "", 200
         else:
-            return "",403
+            return "", 403
 
     return app

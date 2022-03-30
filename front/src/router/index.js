@@ -3,7 +3,7 @@ import HomePage from '../pages/HomePage.vue'
 import ExercisesPage from '../pages/ExercisesPage.vue'
 import ProfilePage from '../pages/ProfilePage'
 import PaymentsPage from '../pages/PaymentsPage.vue'
-import RegLogPage from '../pages/Reg-LogPage.vue'
+import RegisterPage from '../pages/RegisterPage.vue'
 const routes = [
   {
     path: '/home',
@@ -26,9 +26,9 @@ const routes = [
     component:PaymentsPage
   },
   {
-    path: "/",
-    name: "RegLogPage",
-    component:RegLogPage
+    path: "/register",
+    name: "RegisterPage",
+    component:RegisterPage
   }
   
 ]

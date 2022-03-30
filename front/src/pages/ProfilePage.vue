@@ -3,13 +3,10 @@
   <div class="container">
     <div class="profile-header">
       <div class="profile-img">
-        <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-          alt="Profile Image"
-        />
+        <img :src="user.avatar" alt="Profile Image" />
       </div>
       <div class="profile-nav-info">
-        <h3 class="user-name">{{ userName.name }}</h3>
+        <h3 class="user-name">{{ user.name }}</h3>
         <div class="address">
           <p id="state" class="state">Bilbao,</p>
           <span id="country" class="country">España</span>
@@ -20,16 +17,16 @@
     <div class="main-bd">
       <div class="left-side">
         <div class="profile-side">
-          <p class="mobile-no"><i class="fa fa-phone">663422322</i></p>
+          <p class="mobile-no">
+            <i class="fa fa-phone">{{ user.phone }}</i>
+          </p>
           <p class="user-mail">
-            <i class="fa fa-envelope">{{ userName.name }}@gmail.com</i>
+            <i class="fa fa-envelope">{{ user.email }}</i>
           </p>
           <div class="user-bio">
             <h3>Bio</h3>
             <p class="bio">
-              Lorem ipsum dolor sit amet, hello how consectetur adipisicing
-              elit. Sint consectetur provident magni yohoho consequuntur,
-              voluptatibus ghdfff exercitationem at quis similique. Optio, amet!
+              {{ user.bio }}
             </p>
           </div>
         </div>
@@ -69,17 +66,17 @@ export default {
   },
   data() {
     return {
-      userName: "",
+      user: "",
       logs: [],
     };
   },
   mounted() {
     this.getUserData();
-    this.getUserLogs(this.userName.id);
+    this.getUserLogs(this.user.id);
   },
   methods: {
     async getUserData() {
-      this.userName = getUser();
+      this.user = getUser();
     },
     async getUserLogs(userId) {
       let response = await fetch(`${config.API_PATH}/users/${userId}/logs`);

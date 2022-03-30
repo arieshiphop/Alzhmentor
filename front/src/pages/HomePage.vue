@@ -42,7 +42,6 @@ import { useStorage } from "@vueuse/core";
 import { login } from "@/services/auth.js";
 import NavBar from "@/components/NavBar";
 import InputText from "primevue/inputtext";
-
 export default {
   name: "HomePage",
   components: {

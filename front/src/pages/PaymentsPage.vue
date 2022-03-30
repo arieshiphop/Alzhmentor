@@ -103,9 +103,14 @@ section {
   margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(25rem, 5rem), 1fr));
-  height: 20;
-  width: 50%;
-
+  width: 60%;
+  height: 20%;
+  background: rgb(130, 122, 122);
+  background: linear-gradient(
+    45deg,
+    rgba(130, 122, 122, 1) 0%,
+    rgba(221, 214, 214, 1) 100%
+  );
   div {
     width: 5rem;
 

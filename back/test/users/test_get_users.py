@@ -26,10 +26,18 @@ def test_should_return_list_of_users():
     joseba = User(
         id="user-1",
         name="Joseba",
+        avatar="https://avatars0.githubusercontent.com/u/1234?v=4",
+        email="asd@gmail.com",
+        phone="+5511999999999",
+        bio="I am a software developer"
     )
     josu = User(
         id="user-2",
         name="Josu",
+        avatar="https://avatars0.githubusercontent.com/u/1234?v=4",
+        email="asdasd@gmail.com",
+        phone="+5511999999999",
+        bio="I am a software developer"
     )
 
     user_repository.save(joseba)
@@ -43,9 +51,17 @@ def test_should_return_list_of_users():
         {
             "id": "user-1",
             "name": "Joseba",
+            "avatar": "https://avatars0.githubusercontent.com/u/1234?v=4",
+            "email": "asd@gmail.com",
+            "phone": "+5511999999999",
+            "bio": "I am a software developer"
         },
         {
             "id": "user-2",
             "name": "Josu",
-        },
+            "avatar": "https://avatars0.githubusercontent.com/u/1234?v=4",
+            "email": "asdasd@gmail.com",
+            "phone": "+5511999999999",
+            "bio": "I am a software developer"
+        }
     ]

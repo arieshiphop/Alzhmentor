@@ -10,7 +10,8 @@ def setup():
     app = create_app(repositories={"users": user_repository})
     client = app.test_client()
 
-    tomas = User(id='user-tomas', name='Tomás', password='el mejor')
+    tomas = User(id='user-tomas', name='Tomás', password='el mejor',
+                 avatar="", email="", phone="", bio="")
     user_repository.save(tomas)
 
     return client
@@ -22,6 +23,7 @@ def test_should_validate_login():
     body = {
         "user": 'user-tomas',
         'password': 'el mejor'
+
     }
     response = client.post(
         "/auth/login", json=body
@@ -30,7 +32,11 @@ def test_should_validate_login():
     assert response.status_code == 200
     assert response.json == {
         'id': 'user-tomas',
-        'name': 'Tomás'
+        'name': 'Tomás',
+        'avatar': '',
+        'email': '',
+        'phone': '',
+        'bio': ''
     }
 
 
