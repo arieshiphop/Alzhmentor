@@ -7,6 +7,7 @@
       </div>
       <div class="profile-nav-info">
         <h3 class="user-name">{{ user.name }}</h3>
+        <button @click="logOut">Log Out</button>
         <div class="address">
           <p id="state" class="state">Bilbao,</p>
           <span id="country" class="country">España</span>
@@ -59,6 +60,7 @@ import { useStorage } from "@vueuse/core";
 import { getUser } from "@/services/api.js";
 import config from "@/config.js";
 import NavBar from "@/components/NavBar";
+import Swal from "sweetalert2";
 
 export default {
   components: {
@@ -77,6 +79,17 @@ export default {
   methods: {
     async getUserData() {
       this.user = getUser();
+    },
+    logOut() {
+      Swal.fire({
+        title: "Log Out?!",
+        text: "Do you want to log out?",
+        icon: "warning",
+        confirmButtonText: "Continue",
+      }).then((result) => {
+        localStorage.removeItem("user");
+        this.$router.push("/");
+      });
     },
     async getUserLogs(userId) {
       let response = await fetch(`${config.API_PATH}/users/${userId}/logs`);
