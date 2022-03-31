@@ -29,7 +29,8 @@ def test_log_should_be_connected_to_user():
         "dinero_entregado": 29.12,
         "hora": 22.31,
         "completado": True,
-        "mes":"Enero"
+        "mes":"Enero",
+        "juego":"Poker"
     }
     response = client.post(
         "/api/users/user-tomas/logs", json=body
@@ -46,7 +47,8 @@ def test_log_should_be_connected_to_user():
          "dinero_entregado": 29.12,
          "hora": 22.31,
          "completado": 1,
-         "mes":"Enero"}
+         "mes":"Enero",
+         "juego":"Poker"}
     ]
 
 
@@ -60,7 +62,8 @@ def test_user_can_not_post_other_user_logs():
         "dinero_entregado": 29.12,
         "hora": 22.31,
         "completado": True,
-        "mes":"Enero"
+        "mes":"Enero",
+        "juego":"Poker"
     }
     response = client.post(
         "/api/users/user-tomas/logs", json=body

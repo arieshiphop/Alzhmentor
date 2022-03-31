@@ -11,7 +11,12 @@
       </p>
       <form class="field">
         <span class="p-float-label">
-          <InputText id="username" type="text" v-model="user" />
+          <InputText
+            id="username"
+            type="text"
+            v-model="user"
+            autocomplete="off"
+          />
           <label for="username">Username</label>
         </span>
         <span class="p-float-label">
@@ -20,7 +25,6 @@
             type="password"
             v-model="password"
             @keyup.enter="onButtonClicked()"
-            autocomplete="password"
           />
           <label for="password">password</label>
         </span>

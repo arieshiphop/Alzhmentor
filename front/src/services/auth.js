@@ -12,7 +12,6 @@ export async function login(user, password) {
             user: user,
             password: password,
         }),
-
     };
 
 

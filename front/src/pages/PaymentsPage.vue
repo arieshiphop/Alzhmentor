@@ -61,7 +61,11 @@ export default {
             icon: "success",
             confirmButtonText: "Continue",
           });
-          await sendLogToProfile(this.startMoney, this.givedMoney, true);
+          await sendLogToProfile(
+            this.startMoney,
+            this.givedMoney,
+            true,
+          );
         } else {
           Swal.fire({
             title: "Failed!",

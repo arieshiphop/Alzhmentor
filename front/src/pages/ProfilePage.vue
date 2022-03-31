@@ -65,6 +65,7 @@
         <section>
           <article v-if="showStats" class="stats-container">
             <h1>Stats</h1>
+            <pie-chart :data="stats"></pie-chart>
           </article>
         </section>
       </div>
@@ -89,20 +90,28 @@ export default {
       logs: [],
       showLogs: true,
       showStats: false,
+      failed: 0,
+      completed: 0,
+      stats: [],
     };
   },
   mounted() {
     this.getUserData();
     this.getUserLogs(this.user.id);
   },
-  computed: {},
-  methods: {
+  computed: {
     getUserStats() {
       let failed = this.logs.filter((log) => log.completado == 0);
       let completed = this.logs.filter((log) => log.completado == 1);
       this.showLogs = false;
       this.showStats = true;
+      this.stats = [
+        ["completed", completed.length],
+        ["failed", failed.length],
+      ];
     },
+  },
+  methods: {
     async getUserData() {
       this.user = getUser();
     },
@@ -138,6 +147,15 @@ export default {
   font-family: "Poppins", sans-serif;
 }
 
+button {
+  background: #ffcdcd;
+  border-radius: 5px;
+  padding: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+}
 .stats-container {
   width: 100%;
 }

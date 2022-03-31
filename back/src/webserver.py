@@ -61,8 +61,8 @@ def create_app(repositories):
                 dinero_entregado=body['dinero_entregado'],
                 hora=body['hora'],
                 completado=body['completado'],
-                mes = body['mes'])
-
+                mes = body['mes']
+            )
             repositories["logs"].save(log)
 
             return "", 200
