@@ -15,6 +15,9 @@
 
 <script>
 import Chips from "primevue/chips";
+import Swal from "sweetalert2";
+import { okAlert, onError } from "@/services/alerts.js";
+
 export default {
   components: {
     Chips,
@@ -34,15 +37,20 @@ export default {
       return this.randomNumber;
     },
     checkIfOptionsAreCorrect() {
-      for (let option of this.options) {
-        if (parseInt(option) === this.randomNumber) {
-          alert("Correct");
-          this.createRandomSecuency();
-          this.clearList();
-        }
-
+      if (this.options.includes(this.randomNumber.toString())) {
+        okAlert("Correct", "You are correct!");
         this.createRandomSecuency();
         this.clearList();
+      } else {
+        onError("Incorrect", "You are incorrect!");
+        this.createRandomSecuency();
+        this.clearList();
+      }
+      for (let option of this.options) {
+        if (option === this.randomNumber.toString()) {
+        } else {
+          alert("está mal");
+        }
       }
     },
     clearList() {
