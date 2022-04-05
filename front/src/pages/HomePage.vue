@@ -29,6 +29,7 @@
           <label for="password">password</label>
         </span>
       </form>
+      <router-link to="/register">Not registered yet? Register</router-link>
     </section>
 
     <section class="buttons">
@@ -68,6 +69,7 @@ export default {
         const loginUser = await response.json();
         this.localUser = loginUser;
         localStorage.setItem("user", JSON.stringify(this.localUser));
+        localStorage.setItem("isLogged", true);
         okAlert("Welcome", "You are logged in", this.$router);
       }
     },

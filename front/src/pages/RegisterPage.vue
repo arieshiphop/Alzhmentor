@@ -124,8 +124,9 @@ export default {
 
         let response = await fetch("http://localhost:5000/api/users", settings);
         localStorage.setItem("user", JSON.stringify(newUser));
-
+        localStorage.setItem("isLogged", true);
         this.$router.push(`/exercises`);
+
         return response;
       }
     },

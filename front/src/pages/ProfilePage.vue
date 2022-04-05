@@ -52,7 +52,14 @@
           </ul>
         </div>
         <section v-if="showLogs" class="log-container">
-          <article v-for="log in logs" :key="log.id">
+          <article
+            v-bind:class="{
+              failed: log.completado == 0,
+              completed: log.completado == 1,
+            }"
+            v-for="log in logs"
+            :key="log.id"
+          >
             <h1>Log-{{ log.log_id }}</h1>
             <ul>
               <li>Entry money: {{ log.dinero_entregado }}$</li>
@@ -121,9 +128,15 @@ export default {
         text: "Do you want to log out?",
         icon: "warning",
         confirmButtonText: "Continue",
+        showCancelButton: "Cancel",
       }).then((result) => {
-        localStorage.removeItem("user");
-        this.$router.push("/");
+        if (result.isConfirmed) {
+          localStorage.isLogged = false;
+          localStorage.removeItem("user");
+          this.$router.push("/");
+        } else {
+          return "";
+        }
       });
     },
     async getUserLogs(userId) {
@@ -171,11 +184,15 @@ button {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 25rem), 1fr));
 }
 .log-container article {
-  background: rgba(255, 255, 255, 0.6);
-
   padding: 2rem;
   text-align: center;
   box-shadow: 2px 2px 4px black;
+}
+.log-container .failed {
+  background: rgba(255, 0, 0, 0.4);
+}
+.log-container .completed {
+  background: rgba(30, 255, 0, 0.4);
 }
 .log-container article ul {
   list-style: none;

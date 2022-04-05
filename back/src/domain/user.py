@@ -61,11 +61,11 @@ class UserRepository:
         users = [User(**item) for item in data]
         return users
 
-    def get_by_id(self, id):
-        sql = """SELECT * FROM users WHERE id=:id"""
+    def get_by_username(self, name):
+        sql = """SELECT * FROM users WHERE name=:name"""
         conn = self.create_conn()
         cursor = conn.cursor()
-        cursor.execute(sql, {"id": id})
+        cursor.execute(sql, {"name": name})
 
         data = cursor.fetchone()
         if data is None:

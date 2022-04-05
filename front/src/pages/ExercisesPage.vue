@@ -1,7 +1,7 @@
 <template>
   <NavBar></NavBar>
   <main>
-    <section>
+    <section v-if="isLogged">
       <h1>What do you want to train today?</h1>
       <article>
         <div
@@ -15,15 +15,20 @@
         </div>
       </article>
     </section>
+    <section v-else>
+      <h1>You need to sign in</h1>
+    </section>
   </main>
 </template>
 
 <script>
+import { getIfIsLogged } from "@/services/state.js";
 import NavBar from "@/components/NavBar";
 export default {
   components: {
     NavBar,
   },
+
   data() {
     return {
       exercises: [
@@ -49,6 +54,11 @@ export default {
   methods: {
     onExerciseClick(exercise) {
       this.$router.push(`/exercises/${exercise.name.toLowerCase()}`);
+    },
+  },
+  computed: {
+    isLogged() {
+      return getIfIsLogged();
     },
   },
 };

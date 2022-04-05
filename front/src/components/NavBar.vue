@@ -14,15 +14,26 @@
     ></label>
     <ul class="menu">
       <li><a href="#">Home</a></li>
-      <li><a href="#exercises">Exercises</a></li>
-      <li><a href="#profile">Profile</a></li>
+      <li><a href="#exercises" v-if="getIsLogged">Exercises</a></li>
+      <li><a href="#profile" v-if="getIsLogged">Profile</a></li>
     </ul>
   </header>
 </template>
 
 <script>
+import { getIfIsLogged } from "@/services/state.js";
+
 export default {
   name: "NavBar",
+  data() {
+    return {};
+  },
+
+  computed: {
+    getIsLogged() {
+      return getIfIsLogged();
+    },
+  },
 };
 </script>
 

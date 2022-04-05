@@ -4,6 +4,7 @@ import ExercisesPage from '../pages/ExercisesPage.vue'
 import ProfilePage from '../pages/ProfilePage'
 import PaymentsPage from '../pages/PaymentsPage.vue'
 import RegisterPage from '../pages/RegisterPage.vue'
+import AttentionPage from '../pages/AttentionPage.vue'
 const routes = [
   {
     path: '/',
@@ -24,6 +25,11 @@ const routes = [
     path: "/exercises/payments",
     name: "PaymentsPage",
     component:PaymentsPage
+  },
+  {
+    path: "/exercises/attention",
+    name: "AttentionPage",
+    component:AttentionPage,
   },
   {
     path: "/register",

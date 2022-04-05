@@ -12,7 +12,7 @@ def create_app(repositories):
     @app.route("/auth/login", methods=["POST"])
     def login():
         body = request.json
-        user = repositories["users"].get_by_id(body["user"])
+        user = repositories["users"].get_by_username(body["user"])
         if user is None or (body["password"]) != user.password:
             return "", 401
         return user.to_dict(), 200
@@ -61,7 +61,7 @@ def create_app(repositories):
                 dinero_entregado=body['dinero_entregado'],
                 hora=body['hora'],
                 completado=body['completado'],
-                mes = body['mes']
+                mes=body['mes']
             )
             repositories["logs"].save(log)
 

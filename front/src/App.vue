@@ -1,7 +1,15 @@
 <template>
+  <NavBar></NavBar>
   <router-view />
 </template>
-
+<script>
+import NavBar from "./components/NavBar.vue";
+export default {
+  components: {
+    NavBar,
+  },
+};
+</script>
 <style lang="scss">
 $blue-grey: #1a3a38;
 $pink: #fab4cb;
