@@ -29,8 +29,8 @@ def test_log_should_be_connected_to_user():
         "dinero_entregado": 29.12,
         "hora": 22.31,
         "completado": True,
-        "mes":"Enero",
-        "juego":"Poker"
+        "mes": "Enero",
+        "juego": ""
     }
     response = client.post(
         "/api/users/user-tomas/logs", json=body
@@ -39,17 +39,16 @@ def test_log_should_be_connected_to_user():
     response_get = client.get(
         "/api/users/user-tomas/logs"
     )
-    assert response.status_code == 200
-    assert response_get.json == [
-        {"log_id": '44',
-         "id": "user-tomas",
-         "dinero_ofrecido": 27.33,
-         "dinero_entregado": 29.12,
-         "hora": 22.31,
-         "completado": 1,
-         "mes":"Enero",
-         "juego":"Poker"}
-    ]
+    res = response_get.json
+    assert len(res) == 1
+    assert res[0]['log_id'] == '44'
+    assert res[0]['id'] == 'user-tomas'
+    assert res[0]['dinero_ofrecido'] == 27.33
+    assert res[0]['dinero_entregado'] == 29.12
+    assert res[0]['hora'] == 22.31
+    assert res[0]['completado'] == 1
+    assert res[0]['mes'] == 'Enero'
+    assert res[0]['juego'] == ''
 
 
 def test_user_can_not_post_other_user_logs():
@@ -62,8 +61,8 @@ def test_user_can_not_post_other_user_logs():
         "dinero_entregado": 29.12,
         "hora": 22.31,
         "completado": True,
-        "mes":"Enero",
-        "juego":"Poker"
+        "mes": "Enero",
+        "juego": "Poker"
     }
     response = client.post(
         "/api/users/user-tomas/logs", json=body

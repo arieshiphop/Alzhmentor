@@ -2,7 +2,7 @@ import sqlite3
 
 
 class Log:
-    def __init__(self, log_id, id, dinero_ofrecido, dinero_entregado, hora, completado,mes,juego=""):
+    def __init__(self, log_id, id, dinero_ofrecido, dinero_entregado, hora, completado, mes, juego=""):
         self.log_id = log_id
         self.id = id
         self.dinero_ofrecido = dinero_ofrecido
@@ -20,8 +20,8 @@ class Log:
             "dinero_entregado": self.dinero_entregado,
             "hora": self.hora,
             "completado": self.completado,
-            "mes":self.mes,
-            "juego":self.juego
+            "mes": self.mes,
+            "juego": self.juego
         }
 
 

@@ -10,7 +10,7 @@ def setup():
     app = create_app(repositories={"users": user_repository})
     client = app.test_client()
 
-    tomas = User(id='user-tomas', name='Tomás', password='el mejor',
+    tomas = User(id='user-tomas', name='tomas', password='el mejor',
                  avatar="", email="", phone="", bio="")
     user_repository.save(tomas)
 
@@ -21,7 +21,7 @@ def test_should_validate_login():
     client = setup()
 
     body = {
-        "user": 'user-tomas',
+        "user": 'tomas',
         'password': 'el mejor'
 
     }
@@ -32,7 +32,7 @@ def test_should_validate_login():
     assert response.status_code == 200
     assert response.json == {
         'id': 'user-tomas',
-        'name': 'Tomás',
+        'name': 'tomas',
         'avatar': '',
         'email': '',
         'phone': '',
@@ -44,7 +44,7 @@ def test_should_fail_if_invalid_password():
     client = setup()
 
     body = {
-        "user": 'user-tomas',
+        "user": 'tomas',
         'password': 'el peor'
     }
     response = client.post(
