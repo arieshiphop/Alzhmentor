@@ -1,0 +1,26 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "First Tour",
+  "steps": [
+    {
+      "file": "scripts/initial_data.py",
+      "description": "Creamos todos los datos falsos iniciales, para poder comprobar todo sin tener que registrarnos.\nTambién creamos insertamos en la db las columnas paramétricas.",
+      "line": 14
+    },
+    {
+      "file": "test/auth/test_post_login.py",
+      "description": "En estas carpetas, creamos los archivos de test.",
+      "line": 1
+    },
+    {
+      "file": "src/domain/user.py",
+      "description": "Creamos la clase Usuario con sus respectivos datos.",
+      "line": 4
+    },
+    {
+      "file": "app.py",
+      "description": "Corremos la aplicación ejecutando este archivo (python app.py)",
+      "line": 14
+    }
+  ]
+}
