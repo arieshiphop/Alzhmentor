@@ -23,7 +23,7 @@ function getActualMonth() {
     let name = month[d.getMonth()];
     return name
 }
-export async function sendLogToProfile(dinero_entregado, dinero_ofrecido, completado) {
+export async function sendLogToProfile(dinero_entregado, dinero_ofrecido, completado,juego) {
     let id = getUser()
     const settings = {
         method: "POST",
@@ -37,11 +37,11 @@ export async function sendLogToProfile(dinero_entregado, dinero_ofrecido, comple
             dinero_ofrecido: dinero_ofrecido,
             hora: getActualHour(),
             completado: completado,
-            mes:getActualMonth()
+            mes: getActualMonth(),
+            juego:juego,
         }),
-
+        
     };
-
     
     const response = await fetch(`${config.API_PATH}/users/${id.id}/logs`, settings);
     return response

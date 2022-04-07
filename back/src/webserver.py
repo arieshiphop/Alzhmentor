@@ -57,11 +57,12 @@ def create_app(repositories):
             log = Log(
                 log_id=body['log_id'],
                 id=body["id"],
-                dinero_ofrecido=body['dinero_ofrecido'],
-                dinero_entregado=body['dinero_entregado'],
+                dinero_ofrecido=str(body['dinero_ofrecido']),
+                dinero_entregado=str(body['dinero_entregado']),
                 hora=body['hora'],
                 completado=body['completado'],
-                mes=body['mes']
+                mes=body['mes'],
+                juego=body['juego']
             )
             repositories["logs"].save(log)
 

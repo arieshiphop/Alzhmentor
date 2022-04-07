@@ -61,11 +61,7 @@ export default {
             icon: "success",
             confirmButtonText: "Continue",
           });
-          await sendLogToProfile(
-            this.startMoney,
-            this.givedMoney,
-            true,
-          );
+          await sendLogToProfile(this.startMoney, this.givedMoney, true);
         } else {
           Swal.fire({
             title: "Failed!",
@@ -73,7 +69,12 @@ export default {
             icon: "error",
             confirmButtonText: "Continue",
           });
-          await sendLogToProfile(this.startMoney, this.givedMoney, false);
+          await sendLogToProfile(
+            this.startMoney,
+            this.givedMoney,
+            false,
+            "Payments"
+          );
         }
         this.createRandomPrice();
         this.givedMoney = 0.0;

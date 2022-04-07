@@ -3,7 +3,7 @@
     <h2 v-bind:class="{ cleared: disabledClass }">
       {{ randomNumber }}
     </h2>
-    <Chips :max="3" v-model="options">
+    <Chips :max="3" v-model="options" separator="," class="input">
       <template #chip="slotProps">
         <div>
           <span>{{ slotProps.value }}</span>
@@ -11,18 +11,18 @@
         </div>
       </template>
     </Chips>
-
-    <button @click="checkIfOptionsAreCorrect">Check</button>
+    <Button label="Check" @click="checkIfOptionsAreCorrect" />
   </main>
 </template>
 
 <script>
+import { sendLogToProfile } from "@/services/logs.js";
 import Chips from "primevue/chips";
 import Swal from "sweetalert2";
-import { okAlert, onError } from "@/services/alerts.js";
-
+import Button from "primevue/button";
 export default {
   components: {
+    Button,
     Chips,
   },
   data() {
@@ -31,6 +31,7 @@ export default {
       randomNumber: 0,
       play: 0,
       disabledClass: false,
+      timeInterval: 5000,
     };
   },
   mounted() {
@@ -45,9 +46,9 @@ export default {
     },
     disableNumber() {
       setInterval(() => {
-        let timeInterval = 5000;
         this.disabledClass = true;
-      }, timeInterval);
+        console.log(this.timeInterval);
+      }, this.timeInterval);
     },
 
     checkIfOptionsAreCorrect() {
@@ -58,7 +59,7 @@ export default {
           icon: "success",
           confirmButtonText: "Play again",
         }).then((e) => {
-          console.log("funciona");
+          sendLogToProfile(this.randomNumber, this.options, true, "Attention");
           this.createRandomSecuency();
           this.clearList();
         });
@@ -69,9 +70,9 @@ export default {
           icon: "error",
           confirmButtonText: "Play again",
         }).then((e) => {
-          console.log("funciona");
           this.createRandomSecuency();
           this.clearList();
+          sendLogToProfile(this.randomNumber, this.options, false, "Attention");
         });
       }
     },
@@ -85,6 +86,19 @@ export default {
 
 <style>
 main {
+  animation: puff-in 1s ease-out forwards;
+}
+@keyframes puff-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+main {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -93,5 +107,17 @@ main {
 }
 .cleared {
   display: none;
+}
+.p-chips {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: 20rem;
+}
+
+.p-chips-multiple-container {
+  display: flex;
+  flex-wrap: nowrap;
 }
 </style>

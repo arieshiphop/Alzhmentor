@@ -62,6 +62,7 @@
           >
             <h1>Log-{{ log.log_id }}</h1>
             <ul>
+              <li>Game: {{ log.juego }}</li>
               <li>Entry money: {{ log.dinero_entregado }}$</li>
               <li>Gived money: {{ log.dinero_ofrecido }}$</li>
               <li>Hour: {{ log.hora }}</li>
@@ -105,6 +106,7 @@ export default {
   mounted() {
     this.getUserData();
     this.getUserLogs(this.user.id);
+    console.log(this.logs);
   },
   computed: {
     getUserStats() {
