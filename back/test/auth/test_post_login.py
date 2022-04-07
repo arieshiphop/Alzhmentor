@@ -28,16 +28,17 @@ def test_should_validate_login():
     response = client.post(
         "/auth/login", json=body
     )
-
+    res = response.json
+    assert res['id'] == 'user-tomas'
+    assert res['name'] == 'tomas'
+    assert res['avatar'] == ''
+    assert res['email'] == ''
+    assert res['phone'] == ''
+    assert res['bio'] == ''
+    assert res['level'] == '0'
+    assert res['experiencie'] == "0"
     assert response.status_code == 200
-    assert response.json == {
-        'id': 'user-tomas',
-        'name': 'tomas',
-        'avatar': '',
-        'email': '',
-        'phone': '',
-        'bio': ''
-    }
+
 
 
 def test_should_fail_if_invalid_password():

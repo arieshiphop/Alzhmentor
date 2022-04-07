@@ -2,7 +2,7 @@ import sqlite3
 
 
 class User:
-    def __init__(self, id, name, avatar="", email="", phone="", bio="", password="NO-PASSWORD"):
+    def __init__(self, id, name, avatar="", email="", phone="", bio="", password="NO-PASSWORD", level="0", experiencie="0"):
         self.id = id
         self.name = name
         self.avatar = avatar
@@ -10,6 +10,9 @@ class User:
         self.email = email
         self.phone = phone
         self.bio = bio
+        self.level = level
+        self.experiencie = experiencie
+
 
     def to_dict(self):
         return {
@@ -18,7 +21,9 @@ class User:
             "email": self.email,
             "phone": self.phone,
             "bio": self.bio,
-            "avatar": self.avatar
+            "avatar": self.avatar,
+            "level":self.level,
+            "experiencie":self.experiencie
         }
 
 
@@ -42,8 +47,11 @@ class UserRepository:
                 email varchar,
                 phone varchar,
                 bio varchar,
+                level varchar,
+                experiencie varchar,
                 FOREIGN KEY (id) REFERENCES logs(id)
-            )
+            );
+
         """
         conn = self.create_conn()
         cursor = conn.cursor()
@@ -61,6 +69,7 @@ class UserRepository:
         users = [User(**item) for item in data]
         return users
 
+    #! No está para usar todavía, para un futuro *esto es un comentario*
     def get_by_username(self, name):
         sql = """SELECT * FROM users WHERE name=:name"""
         conn = self.create_conn()
@@ -72,15 +81,14 @@ class UserRepository:
             return None
         else:
             user = User(**data)
-
         return user
 
     def save(self, user):
-        sql = """insert into users (id, name,password,avatar,email,phone,bio) values (
-            :id, :name, :password, :avatar, :email, :phone, :bio
+        sql = """insert into users (id, name,password,avatar,email,phone,bio,level,experiencie) values (
+            :id, :name, :password, :avatar, :email, :phone, :bio, :level, :experiencie
         ) """
         conn = self.create_conn()
         cursor = conn.cursor()
         cursor.execute(
-            sql, {"id": user.id, "name": user.name, "password": user.password, "avatar": user.avatar, "email": user.email, "phone": user.phone, "bio": user.bio})
+            sql, {"id": user.id, "name": user.name, "password": user.password, "avatar": user.avatar, "email": user.email, "phone": user.phone, "bio": user.bio, "level": user.level, "experiencie": user.experiencie})
         conn.commit()

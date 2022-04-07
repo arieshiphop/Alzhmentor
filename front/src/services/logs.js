@@ -1,7 +1,7 @@
 import config from "@/config.js";
 import {getUser} from '@/services/api.js'
 import { v4 as uuidv4 } from "uuid";
-
+import {levels,expForLevel} from '@/services/levels.js'
 function randId() {
     return uuidv4();
 }
@@ -23,8 +23,10 @@ function getActualMonth() {
     let name = month[d.getMonth()];
     return name
 }
+
 export async function sendLogToProfile(dinero_entregado, dinero_ofrecido, completado,juego) {
     let id = getUser()
+    
     const settings = {
         method: "POST",
         headers: {

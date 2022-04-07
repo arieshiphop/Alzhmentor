@@ -16,6 +16,7 @@
       <li><a href="#">Home</a></li>
       <li><a href="#exercises" v-if="getIsLogged">Exercises</a></li>
       <li><a href="#profile" v-if="getIsLogged">Profile</a></li>
+      <li><a href="#admin" v-if="user.level == 999">Admin</a></li>
     </ul>
   </header>
 </template>
@@ -26,9 +27,20 @@ import { getIfIsLogged } from "@/services/state.js";
 export default {
   name: "NavBar",
   data() {
-    return {};
+    return {
+      user: "",
+    };
   },
-
+  mounted() {
+    this.setUser();
+  },
+  methods: {
+    setUser() {
+      let user = localStorage.getItem("user");
+      let jsonUser = JSON.parse(user);
+      this.user = jsonUser;
+    },
+  },
   computed: {
     getIsLogged() {
       return getIfIsLogged();

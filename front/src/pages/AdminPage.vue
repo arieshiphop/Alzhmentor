@@ -1,0 +1,82 @@
+<template>
+  <div>
+    <p>
+      Enter "date" to display the current date, "greet {0}" for a message and
+      "random" to get a random number.
+    </p>
+    <Terminal
+      welcomeMessage="Welcome to admin terminal"
+      prompt="admin $: "
+      class="dark-demo-terminal"
+    />
+  </div>
+</template>
+
+<script>
+import TerminalService from "primevue/terminalservice";
+import Terminal from "primevue/terminal";
+import { getUser } from "../services/api.js";
+export default {
+  components: {
+    Terminal,
+  },
+  methods: {
+    commandHandler(text) {
+      let response;
+      let argsIndex = text.indexOf(" ");
+      let command = argsIndex !== -1 ? text.substring(0, argsIndex) : text;
+
+      switch (command) {
+        case "getAdmin":
+          let user = getUser();
+          user.level = 999;
+          localStorage.setItem("user", JSON.stringify(user));
+          console.log(localStorage.getItem("user"));
+          response = "You are admin now" + " " + user.level;
+          break;
+
+        default:
+          response = "Unknown command: " + command;
+      }
+
+      TerminalService.emit("response", response);
+    },
+  },
+  mounted() {
+    TerminalService.on("command", this.commandHandler);
+  },
+  beforeUnmount() {
+    TerminalService.off("command", this.commandHandler);
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+p {
+  margin-top: 0;
+}
+div {
+  margin: 0 auto;
+  height: calc(100vh - 50px);
+}
+::v-deep(.dark-demo-terminal) {
+  margin-top: 5rem;
+  max-height: 70vh;
+  width: 40vw;
+  min-width: 300px;
+  background-color: #212121;
+  color: #ffffff;
+
+  .p-terminal-command {
+    color: #80cbc4;
+  }
+
+  .p-terminal-prompt {
+    color: #ffd54f;
+  }
+
+  .p-terminal-response {
+    color: #9fa8da;
+  }
+}
+</style>

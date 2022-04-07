@@ -8,7 +8,6 @@ export function getUserId() {
   export  function getUser() {
     const userJson = localStorage.getItem("user");
     const user = JSON.parse(userJson)
-    console.log(user)
     return user;
   }
 

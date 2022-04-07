@@ -42,12 +42,11 @@ export default {
       this.disabledClass = false;
       this.randomNumber = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
       this.disableNumber();
-      return this.randomNumber;
     },
     disableNumber() {
       setInterval(() => {
+        this.timeInterval = 5000;
         this.disabledClass = true;
-        console.log(this.timeInterval);
       }, this.timeInterval);
     },
 
@@ -70,9 +69,9 @@ export default {
           icon: "error",
           confirmButtonText: "Play again",
         }).then((e) => {
+          sendLogToProfile(this.randomNumber, this.options, false, "Attention");
           this.createRandomSecuency();
           this.clearList();
-          sendLogToProfile(this.randomNumber, this.options, false, "Attention");
         });
       }
     },

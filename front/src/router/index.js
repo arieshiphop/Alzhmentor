@@ -5,6 +5,7 @@ import ProfilePage from '../pages/ProfilePage'
 import PaymentsPage from '../pages/PaymentsPage.vue'
 import RegisterPage from '../pages/RegisterPage.vue'
 import AttentionPage from '../pages/AttentionPage.vue'
+import AdminPage from '../pages/AdminPage.vue'
 const routes = [
   {
     path: '/',
@@ -35,7 +36,12 @@ const routes = [
     path: "/register",
     name: "RegisterPage",
     component:RegisterPage
-  }
+  },
+  {
+    path: "/admin",
+    name: "AdminPage",
+    component: AdminPage
+  },
   
 ]
 

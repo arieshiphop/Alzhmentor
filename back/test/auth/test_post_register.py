@@ -22,12 +22,14 @@ def test_should_register_a_user():
     response = client.post(
         "/api/users", json=body
     )
+    res = response.json
+    assert res['id'] == 'user-1'
+    assert res['name'] == 'Joseba'
+    assert res['avatar'] == ''
+    assert res['email'] == ''
+    assert res['phone'] == ''
+    assert res['bio'] == ''
+    assert res['level'] == '0'
+    assert res['experiencie'] == "0"
+    
     assert response.status_code == 200
-    assert response.json == {
-        "id": "user-1",
-        "name": "Joseba",
-        "avatar": "",
-        "email": "",
-        "phone": "",
-        "bio": ""
-    }

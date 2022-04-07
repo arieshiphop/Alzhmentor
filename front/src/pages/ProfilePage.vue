@@ -29,6 +29,14 @@
             <p class="bio">
               {{ user.bio }}
             </p>
+            <h3>Level:</h3>
+            <p :class="{ adminRank: isAdmin }">
+              {{ user.level }}
+            </p>
+            <span v-if="!isAdmin">
+              <h3>Experiencie:</h3>
+              <p>{{ user.experiencie }}</p>
+            </span>
           </div>
         </div>
       </div>
@@ -86,7 +94,7 @@ import { getUser } from "@/services/api.js";
 import config from "@/config.js";
 import NavBar from "@/components/NavBar";
 import Swal from "sweetalert2";
-
+import { getLevelName } from "@/services/levels.js";
 export default {
   components: {
     NavBar,
@@ -101,13 +109,15 @@ export default {
       failed: 0,
       completed: 0,
       stats: [],
+      isAdmin: false,
     };
   },
   mounted() {
     this.getUserData();
     this.getUserLogs(this.user.id);
-    console.log(this.logs);
+    this.setUserLevel();
   },
+
   computed: {
     getUserStats() {
       let failed = this.logs.filter((log) => log.completado == 0);
@@ -121,6 +131,12 @@ export default {
     },
   },
   methods: {
+    setUserLevel() {
+      this.user.level = getLevelName();
+      if (this.user.level == "Admin") {
+        this.isAdmin = true;
+      }
+    },
     async getUserData() {
       this.user = getUser();
     },
@@ -161,7 +177,11 @@ export default {
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
+.adminRank {
+  background: gold;
+  padding: 0.4rem;
+  border-radius: 15px;
+}
 button {
   background: #ffcdcd;
   border-radius: 5px;
