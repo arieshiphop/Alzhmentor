@@ -11,6 +11,7 @@
         </div>
       </template>
     </Chips>
+    <p>Pulsa enter para añadir posible respuesta</p>
     <Button label="Check" @click="checkIfOptionsAreCorrect" />
   </main>
 </template>

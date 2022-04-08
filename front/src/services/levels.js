@@ -2,7 +2,6 @@ import { getUser } from '@/services/api.js'
 
 export function getLevelName() {
     let level = getUser().level;
-    upLevel();
     return levels[level]
 }
 

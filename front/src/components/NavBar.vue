@@ -16,7 +16,7 @@
       <li><a href="#">Home</a></li>
       <li><a href="#exercises" v-if="getIsLogged">Exercises</a></li>
       <li><a href="#profile" v-if="getIsLogged">Profile</a></li>
-      <li><a href="#admin" v-if="user.level == 999">Admin</a></li>
+      <li v-if="user.level == 999"><a href="#admin">Admin</a></li>
     </ul>
   </header>
 </template>

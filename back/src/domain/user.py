@@ -13,7 +13,6 @@ class User:
         self.level = level
         self.experiencie = experiencie
 
-
     def to_dict(self):
         return {
             "id": self.id,
@@ -22,8 +21,8 @@ class User:
             "phone": self.phone,
             "bio": self.bio,
             "avatar": self.avatar,
-            "level":self.level,
-            "experiencie":self.experiencie
+            "level": self.level,
+            "experiencie": self.experiencie
         }
 
 
@@ -91,4 +90,13 @@ class UserRepository:
         cursor = conn.cursor()
         cursor.execute(
             sql, {"id": user.id, "name": user.name, "password": user.password, "avatar": user.avatar, "email": user.email, "phone": user.phone, "bio": user.bio, "level": user.level, "experiencie": user.experiencie})
+        conn.commit()
+
+    def update_user(self, user):
+        id = user.id
+        sql = """UPDATE users SET name=:name,password=:password,avatar=:avatar,email=:email,phone=:phone,bio=:bio,level=:level,experiencie=:experiencie WHERE id=:id"""
+        conn = self.create_conn()
+        cursor = conn.cursor()
+        cursor.execute(sql, {"id": user.id, "name": user.name, "password": user.password, "avatar": user.avatar,
+                       "email": user.email, "phone": user.phone, "bio": user.bio, "level": user.level, "experiencie": user.experiencie})
         conn.commit()

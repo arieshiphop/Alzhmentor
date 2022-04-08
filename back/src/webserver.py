@@ -42,6 +42,11 @@ def create_app(repositories):
 
         return user.to_dict(), 200
 
+    @app.route("/api/users/<id>", methods=["PUT"])
+    def modify_user(id):
+        updated_user = repositories["users"].update_user(id)
+        return "", 200
+
     @app.route("/api/users/<userid>/logs", methods=["GET"])
     def get_all_logs(userid):
         all_logs = repositories["logs"].get_all(userid)
