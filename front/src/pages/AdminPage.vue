@@ -1,4 +1,5 @@
 <template>
+  <NavBar></NavBar>
   <div>
     <p>
       Enter "date" to display the current date, "greet {0}" for a message and
@@ -25,7 +26,8 @@ export default {
       let response;
       let argsIndex = text.indexOf(" ");
       let command = argsIndex !== -1 ? text.substring(0, argsIndex) : text;
-
+      let giveRoleParams = [];
+      let userGivedRole = {};
       switch (command) {
         case "getAdmin":
           let user = getUser();
@@ -34,7 +36,14 @@ export default {
           console.log(localStorage.getItem("user"));
           response = "You are admin now" + " " + user.level;
           break;
-
+        case "giveRole":
+          giveRoleParams = text.split(" ");
+          userGivedRole = {
+            user_id: giveRoleParams[1],
+            level: giveRoleParams[2],
+          };
+          console.log(userGivedRole);
+          break;
         default:
           response = "Unknown command: " + command;
       }

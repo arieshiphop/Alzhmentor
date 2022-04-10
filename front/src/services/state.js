@@ -6,5 +6,4 @@ export function getIfIsLogged(){
     if (isLogged == "false") {
        return false
     }
-    console.log(isLogged)   
 }

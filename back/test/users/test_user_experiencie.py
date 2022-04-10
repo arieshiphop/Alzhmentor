@@ -19,7 +19,7 @@ def test_user_get_their_rank_saved():
         phone="",
         bio="",
         level="4",
-        experiencie=2000,
+        experiencie="2000",
     )
 
     user_repository.save(joseba)
@@ -49,11 +49,6 @@ def test_user_get_their_rank_saved():
     assert user["level"] == "5"
     assert user["experiencie"] == "3000"
 
-    response_get_all = client.get(
-        "/api/users"
-    )
-
-    assert len(response_get_all.json) == 1
 
 
 def test_user_should_have_level_and_experiencie():

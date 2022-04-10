@@ -35,7 +35,8 @@
             </p>
             <span v-if="!isAdmin">
               <h3>Experiencie:</h3>
-              <p>{{ user.experiencie }}</p>
+              <ProgressBar :value="percentLeft" />
+              <p>Exp for next level: {{ expLeft }}</p>
             </span>
           </div>
         </div>
@@ -71,8 +72,8 @@
             <h1>Log-{{ log.log_id }}</h1>
             <ul>
               <li>Game: {{ log.juego }}</li>
-              <li>Entry money: {{ log.dinero_entregado }}$</li>
-              <li>Gived money: {{ log.dinero_ofrecido }}$</li>
+              <li>Entry value: {{ log.dinero_entregado }}$</li>
+              <li>Gived value: {{ log.dinero_ofrecido }}$</li>
               <li>Hour: {{ log.hora }}</li>
               <li>Completed: {{ log.completado }}</li>
             </ul>
@@ -94,10 +95,13 @@ import { getUser } from "@/services/api.js";
 import config from "@/config.js";
 import NavBar from "@/components/NavBar";
 import Swal from "sweetalert2";
-import { getLevelName } from "@/services/levels.js";
+import { getPercentForNextLevel, getLevelName } from "@/services/levels.js";
+import ProgressBar from "primevue/progressbar";
+import { expForLevel } from "../services/levels";
 export default {
   components: {
     NavBar,
+    ProgressBar,
   },
 
   data() {
@@ -110,12 +114,16 @@ export default {
       completed: 0,
       stats: [],
       isAdmin: false,
+      percentLeft: 0,
+      expLeft: 0,
     };
   },
+
   mounted() {
     this.getUserData();
     this.getUserLogs(this.user.id);
     this.setUserLevel();
+    this.setUserLevelPercent();
   },
 
   computed: {
@@ -163,6 +171,12 @@ export default {
       this.logs = data;
       this.showLogs = true;
       this.showStats = false;
+    },
+    setUserLevelPercent() {
+      this.percentLeft = parseInt(getPercentForNextLevel());
+      let level = getUser().level;
+      let nextLevel = parseInt(level) + 1;
+      this.expLeft = expForLevel[nextLevel] - parseInt(this.user.experiencie);
     },
   },
 };

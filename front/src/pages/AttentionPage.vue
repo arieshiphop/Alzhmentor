@@ -1,4 +1,5 @@
 <template>
+  <NavBar></NavBar>
   <main>
     <h2 v-bind:class="{ cleared: disabledClass }">
       {{ randomNumber }}
@@ -21,6 +22,7 @@ import { sendLogToProfile } from "@/services/logs.js";
 import Chips from "primevue/chips";
 import Swal from "sweetalert2";
 import Button from "primevue/button";
+import { addExperiencie } from "@/services/levels.js";
 export default {
   components: {
     Button,
@@ -60,6 +62,7 @@ export default {
           confirmButtonText: "Play again",
         }).then((e) => {
           sendLogToProfile(this.randomNumber, this.options, true, "Attention");
+          addExperiencie();
           this.createRandomSecuency();
           this.clearList();
         });

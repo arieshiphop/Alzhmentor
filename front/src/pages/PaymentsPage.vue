@@ -29,6 +29,7 @@ import coins from "@/coins.js";
 import Swal from "sweetalert2";
 import Button from "primevue/button";
 import Dock from "primevue/dock";
+import { addExperiencie } from "../services/levels.js";
 
 export default {
   components: {
@@ -67,6 +68,7 @@ export default {
             true,
             "Payments"
           );
+          addExperiencie();
         } else {
           Swal.fire({
             title: "Failed!",
