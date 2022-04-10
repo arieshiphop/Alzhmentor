@@ -41,11 +41,23 @@ def create_app(repositories):
         repositories["users"].save(user)
 
         return user.to_dict(), 200
+        
+    @app.route("/api/users/<id>", methods=["GET"])
+    def get_user_by_id(id):
+        user = repositories["users"].get_by_id(id)
+        return user.to_dict(), 200
 
     @app.route("/api/users/<id>", methods=["PUT"])
-    def modify_user(id):
-        updated_user = repositories["users"].update_user(id)
+    def contacts_put(id):
+
+        body = request.json
+        body["id"] = id
+        user = User(**body)
+
+        repositories["users"].save(user)
+
         return "", 200
+
 
     @app.route("/api/users/<userid>/logs", methods=["GET"])
     def get_all_logs(userid):

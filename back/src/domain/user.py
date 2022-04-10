@@ -68,7 +68,7 @@ class UserRepository:
         users = [User(**item) for item in data]
         return users
 
-    #! No está para usar todavía, para un futuro *esto es un comentario*
+    
     def get_by_username(self, name):
         sql = """SELECT * FROM users WHERE name=:name"""
         conn = self.create_conn()
@@ -81,9 +81,20 @@ class UserRepository:
         else:
             user = User(**data)
         return user
+    def get_by_id(self, id):
+        sql = """SELECT * FROM users WHERE id=:id"""
+        conn = self.create_conn()
+        cursor = conn.cursor()
+        cursor.execute(sql, {"id": id})
 
+        data = cursor.fetchone()
+        if data is None:
+            return None
+        else:
+            user = User(**data)
+        return user
     def save(self, user):
-        sql = """insert into users (id, name,password,avatar,email,phone,bio,level,experiencie) values (
+        sql = """insert OR REPLACE into users (id, name,password,avatar,email,phone,bio,level,experiencie) values (
             :id, :name, :password, :avatar, :email, :phone, :bio, :level, :experiencie
         ) """
         conn = self.create_conn()
