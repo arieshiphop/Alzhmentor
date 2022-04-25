@@ -1,10 +1,6 @@
 <template>
   <NavBar></NavBar>
   <div>
-    <p>
-      Enter "date" to display the current date, "greet {0}" for a message and
-      "random" to get a random number.
-    </p>
     <Terminal
       welcomeMessage="Welcome to admin terminal"
       prompt="admin $: "
@@ -16,9 +12,11 @@
 <script>
 import TerminalService from "primevue/terminalservice";
 import Terminal from "primevue/terminal";
+import NavBar from "@/components/NavBar";
 import { getUser } from "../services/api.js";
 export default {
   components: {
+    NavBar,
     Terminal,
   },
   methods: {

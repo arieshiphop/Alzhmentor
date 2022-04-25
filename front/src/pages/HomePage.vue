@@ -34,7 +34,6 @@
 
     <section class="buttons">
       <button @click="onButtonClicked" class="startb">Login</button>
-      <button class="seemoreb">See more</button>
     </section>
   </main>
 </template>

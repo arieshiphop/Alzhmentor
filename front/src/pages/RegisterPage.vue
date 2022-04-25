@@ -31,7 +31,7 @@
               <span class="p-inputgroup-addon">
                 <i class="pi pi-envelope"></i>
               </span>
-              <InputText placeholder="Email" v-model="email" />
+              <InputText placeholder="Email" required v-model="email" />
             </div>
           </div>
           <div class="col-12 md:col-4">
@@ -72,8 +72,9 @@ import Avatar from "primevue/avatar";
 import Textarea from "primevue/textarea";
 import FileUpload from "primevue/fileupload";
 import Button from "primevue/button";
-import { getUser } from "../services/api.js";
 import { v4 as uuidv4 } from "uuid";
+import api from "../services/api.js";
+import { isUsernameRegistered } from "../services/auth.js";
 export default {
   name: "HomePage",
   components: {
@@ -96,40 +97,74 @@ export default {
     };
   },
   methods: {
-    async onRegisterClicked() {
-      let user_id = uuidv4();
+    isValidEmail() {
+      let emailRegex =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return this.email.match(emailRegex);
+    },
+    isValidPhone() {
+      let phoneRegex = /^\d{9}$/;
+      return this.phone.match(phoneRegex);
+    },
+    isNotEmptyForm() {
       if (
         this.user != "" &&
         this.password != "" &&
         this.email != "" &&
         this.phone != ""
       ) {
-        let newUser = {
-          id: user_id,
-          name: this.user,
-          password: this.password,
-          avatar: this.avatar,
-          email: this.email,
-          phone: this.phone,
-          bio: this.bio,
-          level: "0",
-          experiencie: "0",
-        };
-
+        return true;
+      } else {
+        return false;
+      }
+    },
+    isValidForm() {
+      if (this.isValidEmail() && this.isValidPhone() && this.isNotEmptyForm()) {
+        console.log("Email, teléfono y formulario válidos");
+        return true;
+      } else {
+        console.log("no es un form, telefono ni email válidos");
+        return false;
+      }
+    },
+    createNewUser(user_id) {
+      let newUser = {
+        id: user_id,
+        name: this.user,
+        password: this.password,
+        avatar: this.avatar,
+        email: this.email,
+        phone: this.phone,
+        bio: this.bio,
+        level: "0",
+        experiencie: "0",
+      };
+      return newUser;
+    },
+    async onRegisterClicked() {
+      let user_id = uuidv4();
+      if (this.isValidForm()) {
+        if (isUsernameRegistered(this.user)) {
+          return;
+        }
         const settings = {
           method: "POST",
-          body: JSON.stringify(newUser),
+          body: JSON.stringify(this.createNewUser(user_id)),
           headers: {
             "Content-Type": "application/json",
           },
         };
-
-        let response = await fetch("http://localhost:5000/api/users", settings);
-        localStorage.setItem("user", JSON.stringify(newUser));
+        let response = await fetch(`${api.API_PATH}users`, settings);
+        localStorage.setItem(
+          "user",
+          JSON.stringify(this.createNewUser(user_id))
+        );
         localStorage.setItem("isLogged", true);
         this.$router.push(`/profile`);
 
         return response;
+      } else {
+        alert("Please fill the form correctly");
       }
     },
   },
