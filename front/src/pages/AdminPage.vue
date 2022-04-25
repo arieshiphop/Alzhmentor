@@ -1,12 +1,12 @@
 <template>
   <NavBar></NavBar>
-  <div>
+  <main>
     <Terminal
       welcomeMessage="Welcome to admin terminal"
       prompt="admin $: "
       class="dark-demo-terminal"
     />
-  </div>
+  </main>
 </template>
 
 <script>
@@ -20,7 +20,12 @@ export default {
     Terminal,
   },
   methods: {
-    commandHandler(text) {
+    async getUserByUserId(userId) {
+      let response = await fetch(`http://localhost:5000/api/users/${userId}`);
+      let data = await response.json();
+      return data;
+    },
+    async commandHandler(text) {
       let response;
       let argsIndex = text.indexOf(" ");
       let command = argsIndex !== -1 ? text.substring(0, argsIndex) : text;
@@ -33,6 +38,12 @@ export default {
           localStorage.setItem("user", JSON.stringify(user));
           console.log(localStorage.getItem("user"));
           response = "You are admin now" + " " + user.level;
+          break;
+        case "getUserByUserId":
+          let userId = text.substring(argsIndex + 1);
+          let data = await this.getUserByUserId(userId);
+          response =
+            "The username of the user id " + userId + " is: " + data.name;
           break;
         case "giveRole":
           giveRoleParams = text.split(" ");
@@ -59,19 +70,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-p {
-  margin-top: 0;
-}
+// p {
+//   margin-top: 0;
+// }
 div {
-  margin: 0 auto;
   height: calc(100vh - 50px);
 }
 ::v-deep(.dark-demo-terminal) {
-  margin-top: 5rem;
-  max-height: 70vh;
-  width: 40vw;
-  min-width: 300px;
   background-color: #212121;
+  height: 70vh;
+  width: 50vw;
   color: #ffffff;
 
   .p-terminal-command {
