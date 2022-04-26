@@ -42,6 +42,7 @@ const routes = [
     name: "AdminPage",
     component: AdminPage
   },
+ 
   
 ]
 

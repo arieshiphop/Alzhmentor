@@ -120,10 +120,8 @@ export default {
     },
     isValidForm() {
       if (this.isValidEmail() && this.isValidPhone() && this.isNotEmptyForm()) {
-        console.log("Email, teléfono y formulario válidos");
         return true;
       } else {
-        console.log("no es un form, telefono ni email válidos");
         return false;
       }
     },
@@ -144,9 +142,6 @@ export default {
     async onRegisterClicked() {
       let user_id = uuidv4();
       if (this.isValidForm()) {
-        if (isUsernameRegistered(this.user)) {
-          return;
-        }
         const settings = {
           method: "POST",
           body: JSON.stringify(this.createNewUser(user_id)),
