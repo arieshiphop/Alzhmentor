@@ -22,11 +22,13 @@ import { sendLogToProfile } from "@/services/logs.js";
 import Chips from "primevue/chips";
 import Swal from "sweetalert2";
 import Button from "primevue/button";
+import NavBar from "../components/NavBar.vue";
 import { addExperiencie } from "@/services/levels.js";
 export default {
   components: {
     Button,
     Chips,
+    NavBar,
   },
   data() {
     return {

@@ -68,7 +68,6 @@ class UserRepository:
         users = [User(**item) for item in data]
         return users
 
-    
     def get_by_username(self, name):
         sql = """SELECT * FROM users WHERE name=:name"""
         conn = self.create_conn()
@@ -81,6 +80,7 @@ class UserRepository:
         else:
             user = User(**data)
         return user
+
     def get_by_id(self, id):
         sql = """SELECT * FROM users WHERE id=:id"""
         conn = self.create_conn()
@@ -93,6 +93,7 @@ class UserRepository:
         else:
             user = User(**data)
         return user
+
     def save(self, user):
         sql = """insert OR REPLACE into users (id, name,password,avatar,email,phone,bio,level,experiencie) values (
             :id, :name, :password, :avatar, :email, :phone, :bio, :level, :experiencie
@@ -110,4 +111,11 @@ class UserRepository:
         cursor = conn.cursor()
         cursor.execute(sql, {"id": user.id, "name": user.name, "password": user.password, "avatar": user.avatar,
                        "email": user.email, "phone": user.phone, "bio": user.bio, "level": user.level, "experiencie": user.experiencie})
+        conn.commit()
+
+    def delete_user_by_id(self, id):
+        sql = """DELETE FROM users WHERE id=:id"""
+        conn = self.create_conn()
+        cursor = conn.cursor()
+        cursor.execute(sql, {"id": id})
         conn.commit()

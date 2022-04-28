@@ -23,7 +23,11 @@
           <p>Email: {{ user.email }}</p>
           <p>Phone: {{ user.phone }}</p>
           <p>Level: {{ user.level }}</p>
-          <Button label="Delete user" class="p-button-danger" />
+          <Button
+            @click="deleteUser(user)"
+            label="Delete user"
+            class="p-button-danger"
+          />
         </article>
       </div>
     </section>
@@ -43,7 +47,7 @@ import NavBar from "@/components/NavBar";
 import { getUser } from "../services/api.js";
 import api from "../services/api.js";
 import Button from "primevue/button";
-
+import config from "../config.js";
 import levels from "../services/levels.js";
 export default {
   components: {
@@ -83,6 +87,14 @@ export default {
       this.showTerminal = true;
       this.showUsers = false;
     },
+    async deleteUser(user) {
+      const response = await fetch(`${api.API_PATH}users/${user.id}`, {
+        method: "DELETE",
+      });
+      if (response.statusText.toLowerCase() == "ok") {
+        this.getAllUsers();
+      }
+    },
 
     async getUserByUserId(userId) {
       let response = await fetch(`${api.API_PATH}/users/${userId}`);
@@ -98,10 +110,19 @@ export default {
       switch (command) {
         case "getAdmin":
           let user = getUser();
+
           user.level = 999;
+          const settings = {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          };
           localStorage.setItem("user", JSON.stringify(user));
-          console.log(localStorage.getItem("user"));
+          await fetch(`${config.API_PATH}/users/${user.id}`, settings);
           response = "You are admin now" + " " + user.level;
+
           break;
         case "getUserByUserId":
           let userId = text.substring(argsIndex + 1);
