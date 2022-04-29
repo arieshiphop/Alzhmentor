@@ -48,7 +48,7 @@ import { getUser } from "../services/api.js";
 import api from "../services/api.js";
 import Button from "primevue/button";
 import config from "../config.js";
-import levels from "../services/levels.js";
+import Swal from "sweetalert2";
 export default {
   components: {
     NavBar,
@@ -112,15 +112,10 @@ export default {
           let user = getUser();
 
           user.level = 999;
-          const settings = {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user),
-          };
+          // const settings = config.createFetchSettings("PUT", "", JSON.stringify(user));
+
           localStorage.setItem("user", JSON.stringify(user));
-          await fetch(`${config.API_PATH}/users/${user.id}`, settings);
+          // await fetch(`${config.API_PATH}/users/${user.id}`, settings);
           response = "You are admin now" + " " + user.level;
 
           break;
