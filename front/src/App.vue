@@ -3,9 +3,26 @@
 </template>
 <script>
 import NavBar from "./components/NavBar.vue";
+import config from "@/config.js";
 export default {
   components: {
     NavBar,
+  },
+  mounted() {
+    this.getLoggedUser();
+  },
+  methods: {
+    async getLoggedUser() {
+      let user = localStorage.getItem("user");
+      if (user != "{}") {
+        let jsonUser = JSON.parse(user);
+        console.log(user);
+
+        const response = await fetch(`${config.API_PATH}/users/${user.id}`);
+        const data = await response.json();
+        localStorage.setItem("user", JSON.stringify(data));
+      }
+    },
   },
 };
 </script>
