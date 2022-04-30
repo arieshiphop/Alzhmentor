@@ -74,6 +74,7 @@ import FileUpload from "primevue/fileupload";
 import Button from "primevue/button";
 import { v4 as uuidv4 } from "uuid";
 import api from "../services/api.js";
+import config from "../config.js";
 import { isUsernameRegistered } from "../services/auth.js";
 export default {
   name: "HomePage",
@@ -142,13 +143,12 @@ export default {
     async onRegisterClicked() {
       let user_id = uuidv4();
       if (this.isValidForm()) {
-        const settings = {
-          method: "POST",
-          body: JSON.stringify(this.createNewUser(user_id)),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
+        const settings = config.createFetchSettings(
+          "POST",
+          "",
+          JSON.stringify(this.createNewUser(user_id))
+        );
+        
         let response = await fetch(`${api.API_PATH}users`, settings);
         localStorage.setItem(
           "user",
