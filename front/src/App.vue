@@ -13,10 +13,15 @@ export default {
   },
   methods: {
     async getLoggedUser() {
-      let user = JSON.parse(localStorage.getItem("user"));
-      const response = await fetch(`${config.API_PATH}/users/${user.id}`);
-      const data = await response.json();
-      localStorage.setItem("user", JSON.stringify(data));
+      let user = localStorage.getItem("user");
+      if (user != "{}") {
+        let jsonUser = JSON.parse(user);
+        console.log(user);
+
+        const response = await fetch(`${config.API_PATH}/users/${user.id}`);
+        const data = await response.json();
+        localStorage.setItem("user", JSON.stringify(data));
+      }
     },
   },
 };
