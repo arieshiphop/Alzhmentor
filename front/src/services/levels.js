@@ -13,12 +13,10 @@ export function getPercentForNextLevel() {
 }
 export async function setLevel() {
     let user_id = getUser().id;
-    const settings = {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+    const settings = config.createFetchSettings(
+        "PUT",
+        "",
+        JSON.stringify({
             id: user_id,
             name: getUser().name,
             avatar: getUser().avatar,
@@ -27,9 +25,8 @@ export async function setLevel() {
             bio: getUser().bio,
             level: getUser().level,
             experiencie: getUser().experiencie
-        }),
-    };
-
+        })
+      );   
     
     const response = await fetch(`${config.API_PATH}/users/${user_id}`, settings);
     return response
