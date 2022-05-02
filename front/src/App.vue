@@ -11,14 +11,14 @@ export default {
   mounted() {
     this.getLoggedUser();
   },
+
   methods: {
     async getLoggedUser() {
       let user = localStorage.getItem("user");
       if (user != "{}") {
         let jsonUser = JSON.parse(user);
-        console.log(user);
 
-        const response = await fetch(`${config.API_PATH}/users/${user.id}`);
+        const response = await fetch(`${config.API_PATH}/users/${jsonUser.id}`);
         const data = await response.json();
         localStorage.setItem("user", JSON.stringify(data));
       }

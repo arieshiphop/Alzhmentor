@@ -50,7 +50,6 @@ def test_user_get_their_rank_saved():
     assert user["experiencie"] == "3000"
 
 
-
 def test_user_should_have_level_and_experiencie():
 
     # ARRANGE (given)
@@ -105,3 +104,39 @@ def test_user_should_have_level_and_experiencie():
     assert res[1]["bio"] == "I am a software developer"
     assert res[1]["level"] == "1"
     assert res[1]["experiencie"] == "250"
+
+
+def test_admin_can_change_user_lvl():
+    user_repository = UserRepository(temp_file())
+    app = create_app(repositories={"users": user_repository})
+    client = app.test_client()
+
+    joseba = User(
+        id="user-1",
+        name="Joseba",
+        avatar="https://avatars0.githubusercontent.com/u/1234?v=4",
+        email="",
+        phone="",
+        bio="",
+        level="4",
+        experiencie="2000",
+    )
+
+    user_repository.save(joseba)
+
+    body = {
+        "name": "Joseba",
+        "level": "999"
+    }
+
+    response = client.post("/admin/users/Joseba/999",
+                           json=body)
+
+    assert response.status_code == 200
+
+    response_get = client.get(
+        "/api/users/user-1"
+    )
+
+    user = response_get.json
+    assert user["level"] == "999"

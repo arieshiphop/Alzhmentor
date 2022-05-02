@@ -1,5 +1,6 @@
 export default{
-    API_PATH :"http://localhost:5000/api/",
+  API_PATH: "http://localhost:5000/api/",
+  ADMIN_PATH:"http://Localhost:5000/admin/",
 }
 
 export function getUserId() {

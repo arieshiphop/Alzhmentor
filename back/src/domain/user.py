@@ -105,12 +105,12 @@ class UserRepository:
         conn.commit()
 
     def update_user(self, user):
-        id = user.id
-        sql = """UPDATE users SET name=:name,password=:password,avatar=:avatar,email=:email,phone=:phone,bio=:bio,level=:level,experiencie=:experiencie WHERE id=:id"""
+        name = user.name
+        sql = """UPDATE users SET level=:level,experiencie=:experiencie WHERE name=:name"""
         conn = self.create_conn()
         cursor = conn.cursor()
-        cursor.execute(sql, {"id": user.id, "name": user.name, "password": user.password, "avatar": user.avatar,
-                       "email": user.email, "phone": user.phone, "bio": user.bio, "level": user.level, "experiencie": user.experiencie})
+        cursor.execute(
+            sql, {"name": user.name, "level": user.level, "experiencie": user.experiencie})
         conn.commit()
 
     def delete_user_by_id(self, id):

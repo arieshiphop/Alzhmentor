@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     async getAllUsers() {
-      const response = await fetch(`${api.API_PATH}/users`);
+      const response = await fetch(`${api.API_PATH}users`);
       const data = await response.json();
       this.showUsers = true;
       this.showTerminal = false;
@@ -88,12 +88,29 @@ export default {
       this.showUsers = false;
     },
     async deleteUser(user) {
-      const response = await fetch(`${api.API_PATH}users/${user.id}`, {
-        method: "DELETE",
+      Swal.fire({
+        title: "Do you want to delete this user account?",
+        showDenyButton: true,
+        confirmButtonText: `Delete`,
+        denyButtonText: `Don't delete`,
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          Swal.fire("User deleted!", "", "success");
+          if (user.level != "999") {
+            const response = await fetch(`${api.API_PATH}users/${user.id}`, {
+              method: "DELETE",
+            });
+            if (response.statusText.toLowerCase() == "ok") {
+              this.getAllUsers();
+            }
+          } else {
+            Swal.fire("You can't delete this user!", "", "error");
+          }
+        } else if (result.isDenied) {
+          Swal.fire("User not deleted", "", "error");
+          return "";
+        }
       });
-      if (response.statusText.toLowerCase() == "ok") {
-        this.getAllUsers();
-      }
     },
 
     async getUserByUserId(userId) {
@@ -110,13 +127,27 @@ export default {
       switch (command) {
         case "getAdmin":
           let user = getUser();
-          //cambiado
           user.level = 999;
-          // const settings = config.createFetchSettings("PUT", "", JSON.stringify(user));
 
           localStorage.setItem("user", JSON.stringify(user));
-          // await fetch(`${config.API_PATH}/users/${user.id}`, settings);
           response = "You are admin now" + " " + user.level;
+          console.log(user, typeof user);
+          const fetchData = await fetch(`${api.API_PATH}users/${user.id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: user.id,
+              name: user.name,
+              avatar: user.avatar,
+              email: user.email,
+              phone: user.phone,
+              bio: user.bio,
+              level: user.level,
+              experiencie: user.experiencie,
+            }),
+          });
 
           break;
         case "getUserByUserId":
@@ -125,13 +156,25 @@ export default {
           response =
             "The username of the user id " + userId + " is: " + data.name;
           break;
-        case "giveRole":
+        case "setLevel":
           giveRoleParams = text.split(" ");
           userGivedRole = {
             user_id: giveRoleParams[1],
             level: giveRoleParams[2],
           };
-          console.log(userGivedRole);
+          const postData = await fetch(
+            `${api.ADMIN_PATH}users/${userGivedRole.user_id}/${userGivedRole.level}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                user_id: userGivedRole.user_id,
+                level: userGivedRole.level,
+              }),
+            }
+          );
           break;
         default:
           response = "Unknown command: " + command;

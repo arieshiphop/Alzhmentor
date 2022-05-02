@@ -17,16 +17,16 @@ def create_app(repositories):
             return "", 401
         return user.to_dict(), 200
 
-    @app.route("/", methods=["GET"])
+    @ app.route("/", methods=["GET"])
     def hello_world():
         return "...magic!"
 
-    @app.route("/api/users", methods=["GET"])
+    @ app.route("/api/users", methods=["GET"])
     def users_get_all():
         all_users = repositories["users"].get_all()
         return object_to_json(all_users)
 
-    @app.route("/api/users", methods=["POST"])
+    @ app.route("/api/users", methods=["POST"])
     def register_user():
         body = request.json
         user = User(
@@ -42,34 +42,35 @@ def create_app(repositories):
 
         return user.to_dict(), 200
 
-    @app.route("/api/users/<id>", methods=["GET"])
+    @ app.route("/api/users/<id>", methods=["GET"])
     def get_user_by_id(id):
         user = repositories["users"].get_by_id(id)
         return user.to_dict(), 200
 
-    @app.route("/api/users/<id>", methods=["PUT"])
+    @ app.route("/api/users/<id>", methods=["PUT"])
     def user_put(id):
 
         body = request.json
         body["id"] = id
+        print(body)
         user = User(**body)
 
-        repositories["users"].save(user)
+        repositories["users"].update_user(user)
 
         return "", 200
 
-    @app.route("/api/users/<id>", methods=["DELETE"])
+    @ app.route("/api/users/<id>", methods=["DELETE"])
     def user_delete(id):
 
         repositories["users"].delete_user_by_id(id)
         return "", 200
 
-    @app.route("/api/users/<userid>/logs", methods=["GET"])
+    @ app.route("/api/users/<userid>/logs", methods=["GET"])
     def get_all_logs(userid):
         all_logs = repositories["logs"].get_all(userid)
         return object_to_json(all_logs)
 
-    @app.route("/api/users/<userid>/logs", methods=["POST"])
+    @ app.route("/api/users/<userid>/logs", methods=["POST"])
     def user_save_logs(userid):
 
         body = request.json
@@ -92,4 +93,11 @@ def create_app(repositories):
         else:
             return "", 403
 
+    @app.route("/admin/users/<username>/<level>", methods=["POST"])
+    def user_update_level(username, level):
+        user = repositories["users"].get_by_username(username)
+        print(user)
+        user.level = level
+        repositories["users"].update_user(user)
+        return "", 200
     return app
