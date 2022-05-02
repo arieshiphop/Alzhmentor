@@ -28,13 +28,13 @@ export async function setLevel() {
             bio: getUser().bio,
             level: getUser().level,
             experiencie: getUser().experiencie
-        }),
-    };
-
-    
+        })
+        
+    }
     const response = await fetch(`${config.API_PATH}/users/${user_id}`, settings);
     return response
 }
+
 
 export async function upLevel(user) {
     

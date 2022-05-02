@@ -1,8 +1,10 @@
 import config from "@/config.js";
+import {createFetchSettings} from "@/config.js"
 import api from "@/services/api.js";
 
 //cambiado
 export async function login(user, password) {
+    //cambiado
     const settings = {
         method: "POST",
         headers: {
@@ -12,9 +14,7 @@ export async function login(user, password) {
             user: user,
             password: password,
         }),
-    };
-
-    
+    }; 
     const response = await fetch(`${config.AUTH_PATH}/login`, settings);
     return response
 }
