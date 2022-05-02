@@ -142,6 +142,7 @@ export default {
     async onRegisterClicked() {
       let user_id = uuidv4();
       if (this.isValidForm()) {
+        //vuelta atrás
         const settings = {
           method: "POST",
           body: JSON.stringify(this.createNewUser(user_id)),

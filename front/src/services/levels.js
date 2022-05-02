@@ -13,6 +13,7 @@ export function getPercentForNextLevel() {
 }
 export async function setLevel() {
     let user_id = getUser().id;
+    //cambiado
     const settings = {
         method: "PUT",
         headers: {

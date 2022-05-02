@@ -110,7 +110,7 @@ export default {
       switch (command) {
         case "getAdmin":
           let user = getUser();
-
+          //cambiado
           user.level = 999;
           const settings = {
             method: "PUT",

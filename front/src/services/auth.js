@@ -1,7 +1,7 @@
 import config from "@/config.js";
 import api from "@/services/api.js";
 
-
+//cambiado
 export async function login(user, password) {
     const settings = {
         method: "POST",

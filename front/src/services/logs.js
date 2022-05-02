@@ -26,7 +26,7 @@ function getActualMonth() {
 
 export async function sendLogToProfile(dinero_entregado, dinero_ofrecido, completado,juego) {
     let id = getUser()
-    
+//cambiado    
     const settings = {
         method: "POST",
         headers: {
