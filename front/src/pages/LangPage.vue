@@ -67,9 +67,12 @@ export default {
           }
         });
       } else {
+        if (this.count == "") {
+          this.count = 0;
+        }
         Swal.fire({
           title: "Failed!",
-          text: `Continue, you marked ${this.count} words`,
+          text: `Fail, you marked ${this.count} words`,
           icon: "error",
           confirmButtonText: "Continue",
         }).then(async (response) => {
