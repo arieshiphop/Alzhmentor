@@ -7,6 +7,7 @@ import RegisterPage from '../pages/RegisterPage.vue'
 import AttentionPage from '../pages/AttentionPage.vue'
 import AdminPage from '../pages/AdminPage.vue'
 import LangPage from '../pages/LangPage.vue'
+import MemoryPage from '../pages/MemoryPage.vue'
 const routes = [
   {
     path: '/',
@@ -48,6 +49,11 @@ const routes = [
     name: "AdminPage",
     component: AdminPage
   },
+  {
+    path: "/exercises/memory",
+    name: "MemoryPage",
+    component: MemoryPage
+  }
  
   
 ]
