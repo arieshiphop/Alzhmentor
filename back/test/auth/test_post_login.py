@@ -23,7 +23,6 @@ def test_should_validate_login():
     body = {
         "user": 'tomas',
         'password': 'el mejor'
-
     }
     response = client.post(
         "/auth/login", json=body
@@ -53,7 +52,6 @@ def test_should_fail_if_invalid_password():
     )
 
     assert response.status_code == 401
-
 
 def test_should_fail_if_user_not_exists():
     client = setup()
