@@ -4,7 +4,7 @@
     <section class="main-container">
       <h1>{{ actualWord }}</h1>
       <InputText placeholder="Sentence" v-model="sentence" />
-      <Button @click="sendGameLog" label="Verify"></Button>
+      <Button @click="checkIfOptionsAreCorrect" label="Verify"></Button>
     </section>
   </main>
 </template>
@@ -15,6 +15,7 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Swal from "sweetalert2";
 import { sendLogToProfile } from "@/services/logs.js";
+import { addExperiencie } from "@/services/levels.js";
 
 export default {
   components: {
@@ -40,11 +41,44 @@ export default {
       console.log(data[0]);
       this.fullWord = data[0];
     },
+    checkIfOptionsAreCorrect() {
+      if (this.sentence == this.fullWord) {
+        Swal.fire({
+          title: "Nice!",
+          text: "You found the word!",
+          icon: "success",
+          confirmButtonText: "Play again",
+        }).then((e) => {
+          sendLogToProfile(this.fullWord, this.sentence, true, "Memory");
+          addExperiencie();
+          this.sentence = "";
+          this.fullWord = "";
+          this.actualWord = "";
+          this.splitText();
+        });
+      } else {
+        Swal.fire({
+          title: "Fail!",
+          text: "You didn't find the word!",
+          icon: "error",
+          confirmButtonText: "Play again",
+        }).then((e) => {
+          sendLogToProfile(this.fullWord, this.sentence, false, "Memory");
+          window.speechSynthesis.cancel();
+          this.sentence = "";
+          this.fullWord = "";
+          this.actualWord = "";
+          this.splitText();
+        });
+      }
+    },
     readText(text) {
       if ("speechSynthesis" in window) {
         let message = new SpeechSynthesisUtterance();
         message.text = text;
         window.speechSynthesis.speak(message);
+        console.log("texto", message.text);
+        console.log(this.fullWord);
       } else {
         alert("Sorry, your browser doesn't support text to speech!");
       }

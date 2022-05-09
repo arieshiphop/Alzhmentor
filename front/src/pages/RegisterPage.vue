@@ -95,16 +95,27 @@ export default {
       email: "",
       phone: "",
       bio: "",
+      registerErrors: {
+        badEmail: {
+          message: "Email is not valid",
+          status: false,
+        },
+        badTelephone: {
+          message: "Phone number is not valid",
+          status: false,
+        },
+      },
     };
   },
   methods: {
     isValidEmail() {
       let emailRegex =
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        /^[^<>()[\]\\,;:\%#^\s@\"$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
       return this.email.match(emailRegex);
     },
     isValidPhone() {
       let phoneRegex = /^\d{9}$/;
+      this.registerErrors.badTelephone.status = this.phone.match(phoneRegex);
       return this.phone.match(phoneRegex);
     },
     isNotEmptyForm() {
@@ -120,7 +131,15 @@ export default {
       }
     },
     isValidForm() {
+      if (!this.isValidPhone()) {
+        alert(this.registerErrors.badTelephone.message);
+      }
+      if (!this.isValidEmail()) {
+        alert(this.registerErrors.badEmail.message);
+      }
       if (this.isValidEmail() && this.isValidPhone() && this.isNotEmptyForm()) {
+        this.registerErrors.badEmail.status = true;
+        this.registerErrors.badTelephone.status = true;
         return true;
       } else {
         return false;
@@ -152,7 +171,7 @@ export default {
           },
         };
 
-        let response = await fetch(`${api.API_PATH}users`, settings);
+        let response = await fetch(`${api.API_PATH}/users`, settings);
         localStorage.setItem(
           "user",
           JSON.stringify(this.createNewUser(user_id))

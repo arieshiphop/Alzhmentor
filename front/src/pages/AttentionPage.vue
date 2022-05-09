@@ -4,22 +4,15 @@
     <h2 v-bind:class="{ cleared: disabledClass }">
       {{ randomNumber }}
     </h2>
-    <Chips :max="3" v-model="options" separator="," class="input">
-      <template #chip="slotProps">
-        <div>
-          <span>{{ slotProps.value }}</span>
-          <i class="pi pi-user-plus" style="font-size: 14px"></i>
-        </div>
-      </template>
-    </Chips>
-    <p>Pulsa enter para añadir posible respuesta</p>
+    <InputText v-model="option"></InputText>
+    <p>Write the possible answer in the input, then click button.</p>
     <Button label="Check" @click="checkIfOptionsAreCorrect" />
   </main>
 </template>
 
 <script>
 import { sendLogToProfile } from "@/services/logs.js";
-import Chips from "primevue/chips";
+import InputText from "primevue/inputtext";
 import Swal from "sweetalert2";
 import Button from "primevue/button";
 import NavBar from "../components/NavBar.vue";
@@ -27,12 +20,12 @@ import { addExperiencie } from "@/services/levels.js";
 export default {
   components: {
     Button,
-    Chips,
     NavBar,
+    InputText,
   },
   data() {
     return {
-      options: [],
+      option: "",
       randomNumber: 0,
       play: 0,
       disabledClass: false,
@@ -56,14 +49,14 @@ export default {
     },
 
     checkIfOptionsAreCorrect() {
-      if (this.options.includes(this.randomNumber.toString())) {
+      if (this.option == this.randomNumber) {
         Swal.fire({
           title: "Nice!",
           text: "You found the number!",
           icon: "success",
           confirmButtonText: "Play again",
         }).then((e) => {
-          sendLogToProfile(this.randomNumber, this.options, true, "Attention");
+          sendLogToProfile(this.randomNumber, this.option, true, "Attention");
           addExperiencie();
           this.createRandomSecuency();
           this.clearList();
@@ -75,15 +68,14 @@ export default {
           icon: "error",
           confirmButtonText: "Play again",
         }).then((e) => {
-          sendLogToProfile(this.randomNumber, this.options, false, "Attention");
+          sendLogToProfile(this.randomNumber, this.option, false, "Attention");
           this.createRandomSecuency();
           this.clearList();
         });
       }
     },
     clearList() {
-      const listCleared = [];
-      this.options = listCleared;
+      this.option = "";
     },
   },
 };
@@ -92,6 +84,7 @@ export default {
 <style>
 main {
   animation: puff-in 1s ease-out forwards;
+  gap: 1.5rem;
 }
 @keyframes puff-in {
   0% {

@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     async getAllUsers() {
-      const response = await fetch(`${api.API_PATH}users`);
+      const response = await fetch(`${api.API_PATH}/users`);
       const data = await response.json();
       this.showUsers = true;
       this.showTerminal = false;
@@ -97,7 +97,7 @@ export default {
         if (result.isConfirmed) {
           Swal.fire("User deleted!", "", "success");
           if (user.level != "999") {
-            const response = await fetch(`${api.API_PATH}users/${user.id}`, {
+            const response = await fetch(`${api.API_PATH}/users/${user.id}`, {
               method: "DELETE",
             });
             if (response.statusText.toLowerCase() == "ok") {
@@ -125,6 +125,15 @@ export default {
       let giveRoleParams = [];
       let userGivedRole = {};
       switch (command) {
+        case "help":
+          response = `
+          Available commands: 
+          help - show this help 
+          getUserByUserId userId - show user by id 
+          getAdmin - give admin yourself
+          setLevel userId level - delete user
+          `;
+          break;
         case "getAdmin":
           let user = getUser();
           user.level = 999;
@@ -132,7 +141,7 @@ export default {
           localStorage.setItem("user", JSON.stringify(user));
           response = "You are admin now" + " " + user.level;
           console.log(user, typeof user);
-          const fetchData = await fetch(`${api.API_PATH}users/${user.id}`, {
+          const fetchData = await fetch(`${api.API_PATH}/users/${user.id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",

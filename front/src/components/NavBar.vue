@@ -13,7 +13,7 @@
       ><span class="nav-icon"></span
     ></label>
     <ul class="menu">
-      <li><a href="#">Home</a></li>
+      <li v-if="!getIsLogged"><a href="#">Home</a></li>
       <li><a href="#exercises" v-if="getIsLogged">Exercises</a></li>
       <li><a href="#profile" v-if="getIsLogged">Profile</a></li>
       <li v-if="user.level == 999"><a href="#admin">Admin</a></li>
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       user: "",
+      isLogged: false,
     };
   },
   mounted() {

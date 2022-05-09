@@ -5,9 +5,9 @@
       <img src="../assets/logo.png" alt="" />
       <p>
         Recently, there have been many people who have witnessed their loved
-        ones suffering from Alzheimer's and other forms of dementia 👩‍🦳. Through
-        a web application, we will try to help them by training their brain and
-        memory 🧠.
+        ones suffering from Alzheimer's and other forms of dementia. Through a
+        web application, we will try to help them by training their brain and
+        memory.
       </p>
       <form class="field">
         <span class="p-float-label">
@@ -31,7 +31,6 @@
       </form>
       <router-link to="/register">Not registered yet? Register</router-link>
     </section>
-
     <section class="buttons">
       <button @click="onButtonClicked" class="startb">Login</button>
     </section>
@@ -56,6 +55,7 @@ export default {
       user: "",
       password: "",
       localUser: useStorage("user", {}),
+      
     };
   },
   methods: {
@@ -149,7 +149,6 @@ button:hover {
     }
   }
   main .first-content p {
-    font-size: 3vw;
     width: 80%;
   }
 }

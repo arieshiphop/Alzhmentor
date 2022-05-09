@@ -8,10 +8,6 @@
       <div class="profile-nav-info">
         <h3 class="user-name">{{ user.name }}</h3>
         <button @click="logOut">Log Out</button>
-        <div class="address">
-          <p id="state" class="state">Bilbao,</p>
-          <span id="country" class="country">España</span>
-        </div>
       </div>
     </div>
 
@@ -72,8 +68,8 @@
             <h1>Log-{{ log.log_id }}</h1>
             <ul>
               <li>Game: {{ log.juego }}</li>
-              <li>Entry value: {{ log.dinero_entregado }}$</li>
-              <li>Gived value: {{ log.dinero_ofrecido }}$</li>
+              <li>Entry value: {{ log.dinero_entregado }}</li>
+              <li>Gived value: {{ log.dinero_ofrecido }}</li>
               <li>Hour: {{ log.hora }}</li>
               <li>Completed: {{ log.completado }}</li>
             </ul>
@@ -158,7 +154,9 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           localStorage.isLogged = false;
+          localStorage.setItem("isLogged", false);
           localStorage.removeItem("user");
+          location.reload();
           this.$router.push("/");
         } else {
           return "";
