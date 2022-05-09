@@ -1,17 +1,18 @@
-export default{
-  API_PATH: "http://localhost:5000/api/",
-  ADMIN_PATH:"http://Localhost:5000/admin/",
-}
+export default {
+  // API_PATH: 'https://alzhmentor.herokuapp.com/api',
+  // AUTH_PATH: 'https://alzhmentor.herokuapp.com/auth',
+  API_PATH: "http://localhost:5000/api",
+  AUTH_PATH: "http://localhost:5000/auth",
+};
 
 export function getUserId() {
   const userJson = localStorage.getItem("user");
   const user = JSON.parse(userJson);
   return user.id;
 }
-  
-  export  function getUser() {
-    const userJson = localStorage.getItem("user");
-    const user = JSON.parse(userJson)
-    return user;
-  }
 
+export function getUser() {
+  const userJson = localStorage.getItem("user");
+  const user = JSON.parse(userJson);
+  return user;
+}
