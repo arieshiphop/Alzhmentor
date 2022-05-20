@@ -2,7 +2,6 @@
   <NavBar></NavBar>
   <main>
     <section class="first-content">
-      <img src="../assets/logo.png" alt="" />
       <p>
         Recently, there have been many people who have witnessed their loved
         ones suffering from Alzheimer's and other forms of dementia. Through a
@@ -32,8 +31,11 @@
       <router-link to="/register">Not registered yet? Register</router-link>
     </section>
     <section class="buttons">
-      <button @click="onButtonClicked" class="startb">Login</button>
+      <button @click="onButtonClicked" @mouseenter="changeRainVideo" class="startb">Login</button>
     </section>
+    <video playsinline autoplay muted loop id="bgvid">
+      <source src="../assets/rain.mp4" type="video/mp4" />
+    </video>
   </main>
 </template>
 
@@ -55,10 +57,14 @@ export default {
       user: "",
       password: "",
       localUser: useStorage("user", {}),
-      
     };
   },
   methods: {
+    changeRainVideo() {
+      document.getElementById("bgvid").getElementsByTagName("source")[
+        SourceIndex
+      ].src = "../assets/sky.mp4";
+    },
     async onButtonClicked() {
       const response = await login(this.user, this.password);
 
@@ -84,7 +90,15 @@ $blue-grey: #1a3a38;
 $pink: #fab4cb;
 $meat: #dfc19d;
 $yellow-white: #e5e7b5;
-
+video {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -999;
+}
 .p-float-label {
   margin-top: 1rem;
 }
@@ -176,8 +190,9 @@ button:hover {
   width: 30%;
   display: flex;
   flex-direction: row;
+
   justify-content: space-around;
-  margin-top: -4vh;
+  margin-top: -10vh;
   transition: 0.2s ease-in;
   .startb {
     background: #1e90ff;
