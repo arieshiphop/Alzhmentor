@@ -1,5 +1,6 @@
 import smtplib
 import ssl
+import requests
 from email.mime.text import MIMEText
 from email.utils import formataddr
 from email.mime.multipart import MIMEMultipart  # New line
@@ -12,10 +13,16 @@ class Mail_Sender:
         self.sender_email = sender_email
         self.sender_name = sender_name
         self.password = password
+        self.receiver_emails = []
+        self.receiver_names = []
 
-    def set_users_data(self, receiver_emails, receiver_names):
-        self.receiver_emails = receiver_emails
-        self.receiver_names = receiver_names
+    def get_users_data(self):
+        response = requests.get("https://alzhmentor.herokuapp.com/api/users")
+        users_data = response.json()
+
+        for user in users_data:
+            self.receiver_emails.append(user['email'])
+            self.receiver_names.append(user['name'])
 
     def read_email_body_content(self, html_path):
         email_html = open(html_path, "r")
@@ -49,9 +56,9 @@ class Mail_Sender:
 
 
 if __name__ == "__main__":
+
     email_sender = Mail_Sender(
-        "ikersanchez.contacto@gmail.com", "Iker", "arieshh19692004")
-    email_sender.set_users_data(
-        ["ikerakaaries@gmail.com", "iker.sanchez@runnea.com"], ["Iker", "Iker Sanchez"])
+        "alzhmentor@gmail.com", "Alzhmentor", "alzhmentor2022")
+    email_sender.get_users_data()
     email_sender.read_email_body_content("src/services/email.html")
     email_sender.send_email()
