@@ -3,6 +3,7 @@ export default {
   // AUTH_PATH: 'https://alzhmentor.herokuapp.com/auth',
   API_PATH: "http://localhost:5000/api",
   AUTH_PATH: "http://localhost:5000/auth",
+  ADMIN_PATH: "http://localhost:5000/admin",
 };
 
 export function getUserId() {

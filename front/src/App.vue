@@ -13,13 +13,11 @@ $pink: #fab4cb;
 }
 body {
   background: #77a1d3; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    $pink,
-    #79cbca,
-    #77a1d3
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #e684ae, #79cbca, #77a1d3);
+  background: linear-gradient(
+    60deg,
+    rgba(84, 58, 183, 1) 0%,
+    rgba(0, 172, 193, 1) 100%
+  );
 }
 button:hover {
   cursor: pointer;

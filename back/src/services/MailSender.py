@@ -4,22 +4,20 @@ import requests
 from email.mime.text import MIMEText
 from email.utils import formataddr
 from email.mime.multipart import MIMEMultipart  # New line
-from email.mime.base import MIMEBase  # New line
-from email import encoders  # New line
+from src.config import config
 
 
 class Mail_Sender:
-    def __init__(self, sender_email, sender_name, password):
-        self.sender_email = sender_email
-        self.sender_name = sender_name
-        self.password = password
+    def __init__(self):
+        self.sender_email = config['services']['mail']['MAIL_SENDER_EMAIL']
+        self.sender_name = config['services']['mail']['MAIL_SENDER_NAME']
+        self.password = config['services']['mail']['MAIL_SENDER_PASSWORD']
         self.receiver_emails = []
         self.receiver_names = []
 
     def get_users_data(self):
-        response = requests.get("https://alzhmentor.herokuapp.com/api/users")
+        response = requests.get(config['api']['API_PATH'] + '/users')
         users_data = response.json()
-
         for user in users_data:
             self.receiver_emails.append(user['email'])
             self.receiver_names.append(user['name'])
@@ -57,8 +55,7 @@ class Mail_Sender:
 
 if __name__ == "__main__":
 
-    email_sender = Mail_Sender(
-        "alzhmentor@gmail.com", "Alzhmentor", "alzhmentor2022")
+    email_sender = Mail_Sender()
     email_sender.get_users_data()
     email_sender.read_email_body_content("src/services/email.html")
     email_sender.send_email()

@@ -44,11 +44,11 @@
 import TerminalService from "primevue/terminalservice";
 import Terminal from "primevue/terminal";
 import NavBar from "@/components/NavBar";
-import { getUser } from "../services/api.js";
+import { getAdmin, getUsernameById,setLevel } from "../services/terminal";
 import api from "../services/api.js";
 import Button from "primevue/button";
-import config from "../config.js";
 import Swal from "sweetalert2";
+
 export default {
   components: {
     NavBar,
@@ -79,7 +79,6 @@ export default {
       const data = await response.json();
       this.showUsers = true;
       this.showTerminal = false;
-
       this.users = data;
     },
 
@@ -113,17 +112,10 @@ export default {
       });
     },
 
-    async getUserByUserId(userId) {
-      let response = await fetch(`${api.API_PATH}/users/${userId}`);
-      let data = await response.json();
-      return data;
-    },
     async commandHandler(text) {
       let response;
       let argsIndex = text.indexOf(" ");
       let command = argsIndex !== -1 ? text.substring(0, argsIndex) : text;
-      let giveRoleParams = [];
-      let userGivedRole = {};
       switch (command) {
         case "help":
           response = `
@@ -135,55 +127,17 @@ export default {
           `;
           break;
         case "getAdmin":
-          let user = getUser();
-          user.level = 999;
-
-          localStorage.setItem("user", JSON.stringify(user));
-          response = "You are admin now" + " " + user.level;
-          console.log(user, typeof user);
-          const fetchData = await fetch(`${api.API_PATH}/users/${user.id}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id: user.id,
-              name: user.name,
-              avatar: user.avatar,
-              email: user.email,
-              phone: user.phone,
-              bio: user.bio,
-              level: user.level,
-              experiencie: user.experiencie,
-            }),
-          });
-
+          getAdmin();
+          response = "You are now admin";
           break;
-        case "getUserByUserId":
-          let userId = text.substring(argsIndex + 1);
-          let data = await this.getUserByUserId(userId);
-          response =
-            "The username of the user id " + userId + " is: " + data.name;
+        case "getUserById":
+          let user = await getUsernameById(text,argsIndex);
+          response = "The name of the user id " + user['id'] + " is: " + user['name'];
           break;
+
         case "setLevel":
-          giveRoleParams = text.split(" ");
-          userGivedRole = {
-            user_id: giveRoleParams[1],
-            level: giveRoleParams[2],
-          };
-          const postData = await fetch(
-            `${api.ADMIN_PATH}users/${userGivedRole.user_id}/${userGivedRole.level}`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                user_id: userGivedRole.user_id,
-                level: userGivedRole.level,
-              }),
-            }
-          );
+          setLevel(text);
+          response = "You setted level";
           break;
         default:
           response = "Unknown command: " + command;
