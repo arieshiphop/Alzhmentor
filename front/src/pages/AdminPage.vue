@@ -44,7 +44,12 @@
 import TerminalService from "primevue/terminalservice";
 import Terminal from "primevue/terminal";
 import NavBar from "@/components/NavBar";
-import { getAdmin, getUsernameById,setLevel } from "../services/terminal";
+import {
+  getAdmin,
+  getUsernameById,
+  setLevel,
+  getUserStats,
+} from "../services/terminal";
 import api from "../services/api.js";
 import Button from "primevue/button";
 import Swal from "sweetalert2";
@@ -119,9 +124,9 @@ export default {
       switch (command) {
         case "help":
           response = `
-          Available commands: 
-          help - show this help 
-          getUserByUserId userId - show user by id 
+          Available commands:
+          help - show this help
+          getUserByUserId userId - show user by id
           getAdmin - give admin yourself
           setLevel userId level - delete user
           `;
@@ -130,9 +135,19 @@ export default {
           getAdmin();
           response = "You are now admin";
           break;
+        case "getUserStats":
+          user = await getUserStats(text, argsIndex);
+          console.log(user);
+          response =
+            "El usuario es " +
+            user["name"] +
+            " con un nivel de " +
+            user["level"];
+          break;
         case "getUserById":
-          let user = await getUsernameById(text,argsIndex);
-          response = "The name of the user id " + user['id'] + " is: " + user['name'];
+          let user = await getUsernameById(text, argsIndex);
+          response =
+            "The name of the user id " + user["id"] + " is: " + user["name"];
           break;
 
         case "setLevel":

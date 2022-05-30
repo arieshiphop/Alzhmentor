@@ -1,10 +1,11 @@
 import { getUser } from "./api.js";
 import api from "./api.js";
+
 export async function getAdmin() {
   let user = getUser();
   user.level = 999;
   localStorage.setItem("user", JSON.stringify(user));
-  const fetchData = await fetch(`${api.API_PATH}/users/${user.id}`, {
+  await fetch(`${api.API_PATH}/users/${user.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -25,6 +26,18 @@ async function getUserByUserId(userId) {
   let response = await fetch(`${api.API_PATH}/users/${userId}`);
   let data = await response.json();
   return data;
+}
+export async function getUserStats(text, argsIndex) {
+  let userId = text.substring(argsIndex + 1);
+  console.log(userId);
+  let user = await getUserByUserId(userId);
+  console.log(user);
+  let stats = {
+    name: user.name,
+    level: user.level,
+    experiencie: user.experiencie,
+  };
+  return stats;
 }
 export async function getUsernameById(text, argsIndex) {
   let userId = text.substring(argsIndex + 1);

@@ -5,6 +5,8 @@ from email.mime.text import MIMEText
 from email.utils import formataddr
 from email.mime.multipart import MIMEMultipart  # New line
 from src.config import config
+import string
+import random
 
 
 class Mail_Sender:
@@ -14,6 +16,11 @@ class Mail_Sender:
         self.password = config['services']['mail']['MAIL_SENDER_PASSWORD']
         self.receiver_emails = []
         self.receiver_names = []
+        self.verify_code = ""
+
+    def generate_verify_code(self):
+        letters = string.digits
+        self.verify_code = ''.join(random.choice(letters) for i in range(4))
 
     def get_users_data(self):
         response = requests.get(config['api']['API_PATH'] + '/users')
@@ -22,8 +29,8 @@ class Mail_Sender:
             self.receiver_emails.append(user['email'])
             self.receiver_names.append(user['name'])
 
-    def read_email_body_content(self, html_path):
-        email_html = open(html_path, "r")
+    def read_email_body_content(self, verify_path):
+        email_html = open(verify_path, "r")
         self.email_body = email_html.read()
 
     def send_email(self):
@@ -56,6 +63,5 @@ class Mail_Sender:
 if __name__ == "__main__":
 
     email_sender = Mail_Sender()
-    email_sender.get_users_data()
-    email_sender.read_email_body_content("src/services/email.html")
-    email_sender.send_email()
+    email_sender.email_body = "Tu código de verificación es" + email_sender.verify_code
+    email_sender.generate_verify_code()

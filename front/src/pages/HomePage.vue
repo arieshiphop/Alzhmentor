@@ -33,9 +33,7 @@
     <section class="buttons">
       <button @click="onButtonClicked" @mouseenter="changeRainVideo" class="startb">Login</button>
     </section>
-    <video playsinline autoplay muted loop id="bgvid">
-      <source src="../assets/rain.mp4" type="video/mp4" />
-    </video>
+
   </main>
 </template>
 

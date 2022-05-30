@@ -3,6 +3,7 @@ from flask_cors import CORS
 from src.lib.utils import object_to_json
 from src.domain.logs import Log
 from src.domain.user import User
+from src.services.MailSender import *
 
 
 def create_app(repositories):
@@ -26,21 +27,33 @@ def create_app(repositories):
         all_users = repositories["users"].get_all()
         return object_to_json(all_users)
 
+    @app.route("/api/verify_code", methods="[GET]")
+    def send_code():
+        body = request.json
+        ms = Mail_Sender()
+        ms.generate_verify_code()
+        ms.receiver_emails.append(body["email"])
+        ms.send_email()
+
     @ app.route("/api/users", methods=["POST"])
     def register_user():
         body = request.json
-        user = User(
-            id=body['id'],
-            name=body['name'],
-            password=body['password'],
-            avatar=body['avatar'],
-            email=body['email'],
-            phone=body['phone'],
-            bio=body['bio']
-        )
-        repositories["users"].save(user)
+        code = request.headers['code']
+        ms = Mail_Sender()
 
-        return user.to_dict(), 200
+        if ms['verify_code'] == code:
+            user = User(
+                id=body['id'],
+                name=body['name'],
+                password=body['password'],
+                avatar=body['avatar'],
+                email=body['email'],
+                phone=body['phone'],
+                bio=body['bio']
+            )
+            repositories["users"].save(user)
+
+            return user.to_dict(), 200
 
     @ app.route("/api/users/<id>", methods=["GET"])
     def get_user_by_id(id):
