@@ -25,7 +25,7 @@ def test_should_register_a_user():
     res = response.json
     assert res['id'] == 'user-1'
     assert res['name'] == 'Joseba'
-    assert res['avatar'] == ''
+    assert res['avatar'] == 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
     assert res['email'] == ''
     assert res['phone'] == ''
     assert res['bio'] == ''

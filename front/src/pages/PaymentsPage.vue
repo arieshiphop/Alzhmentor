@@ -113,22 +113,14 @@ section {
   border: 2px solid black;
   border-radius: 5px;
   margin-top: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(25rem, 5rem), 1fr));
-  width: 80%;
-  background: rgb(130, 122, 122);
-  background: linear-gradient(
-    45deg,
-    rgba(130, 122, 122, 1) 0%,
-    rgba(221, 214, 214, 1) 100%
-  );
+  display:flex;
   div {
     width: 5rem;
 
     img {
       object-fit: cover;
       width: 100%;
-      height: 3rem;
+      height: 4rem;
     }
     img:hover {
       cursor: pointer;

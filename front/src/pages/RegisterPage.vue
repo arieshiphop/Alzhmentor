@@ -150,7 +150,7 @@ export default {
         id: user_id,
         name: this.user,
         password: this.password,
-        avatar: this.avatar,
+        avatar: this.avatar !="" ? this.avatar : config.defaultAvatar,
         email: this.email,
         phone: this.phone,
         bio: this.bio,
@@ -162,7 +162,6 @@ export default {
     async onRegisterClicked() {
       let user_id = uuidv4();
       if (this.isValidForm()) {
-        //vuelta atrás
         const settings = {
           method: "POST",
           body: JSON.stringify(this.createNewUser(user_id)),
@@ -170,7 +169,6 @@ export default {
             "Content-Type": "application/json",
           },
         };
-
         let response = await fetch(`${api.API_PATH}/users`, settings);
         localStorage.setItem(
           "user",

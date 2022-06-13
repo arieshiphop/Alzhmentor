@@ -2,7 +2,7 @@ import sqlite3
 
 
 class User:
-    def __init__(self, id, name, avatar="", email="", phone="", bio="", password="NO-PASSWORD", level="0", experiencie="0"):
+    def __init__(self, id, name, avatar="https://i.pinimg.com/originals/8b/6e/c6/8b6ec60427f9b17c1d9aaf4c415babe3.png", email="", phone="", bio="", password="NO-PASSWORD", level="0", experiencie="0"):
         self.id = id
         self.name = name
         self.avatar = avatar

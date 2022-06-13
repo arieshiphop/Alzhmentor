@@ -38,22 +38,18 @@ def create_app(repositories):
     @ app.route("/api/users", methods=["POST"])
     def register_user():
         body = request.json
-        code = request.headers['code']
-        ms = Mail_Sender()
+        user = User(
+            id=body['id'],
+            name=body['name'],
+            password=body['password'],
+            avatar= body['avatar'] if body['avatar'] !='' else "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+            email=body['email'],
+            phone=body['phone'],
+            bio=body['bio']
+        )
+        repositories["users"].save(user)
 
-        if ms['verify_code'] == code:
-            user = User(
-                id=body['id'],
-                name=body['name'],
-                password=body['password'],
-                avatar=body['avatar'],
-                email=body['email'],
-                phone=body['phone'],
-                bio=body['bio']
-            )
-            repositories["users"].save(user)
-
-            return user.to_dict(), 200
+        return user.to_dict(), 200
 
     @ app.route("/api/users/<id>", methods=["GET"])
     def get_user_by_id(id):
