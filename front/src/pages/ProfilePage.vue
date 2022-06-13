@@ -153,11 +153,11 @@ export default {
         showCancelButton: "Cancel",
       }).then((result) => {
         if (result.isConfirmed) {
-          localStorage.isLogged = false;
+          //log out
+          localStorage.removeItem("user");
           localStorage.setItem("isLogged", false);
           localStorage.removeItem("user");
-          location.reload();
-          this.$router.push("/");
+          window.location.href = "/";
         } else {
           return "";
         }
