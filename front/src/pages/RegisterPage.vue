@@ -10,7 +10,7 @@
               <span class="p-inputgroup-addon">
                 <i class="pi pi-user"></i>
               </span>
-              <InputText placeholder="Username" v-model="user" />
+              <InputText placeholder="Username *" v-model="user" />
             </div>
           </div>
           <div class="col-12 md:col-4">
@@ -20,7 +20,7 @@
               </span>
               <InputText
                 type="password"
-                placeholder="Password"
+                placeholder="Password *"
                 v-model="password"
                 autocomplete="password"
               />
@@ -31,7 +31,7 @@
               <span class="p-inputgroup-addon">
                 <i class="pi pi-envelope"></i>
               </span>
-              <InputText placeholder="Email" required v-model="email" />
+              <InputText placeholder="Email *" required v-model="email" />
             </div>
           </div>
           <div class="col-12 md:col-4">
@@ -39,7 +39,7 @@
               <span class="p-inputgroup-addon">
                 <i class="pi pi-phone"></i>
               </span>
-              <InputText placeholder="Phone number" v-model="phone" />
+              <InputText placeholder="Phone number *" v-model="phone" />
             </div>
           </div>
           <div class="col-12 md:col-4">
@@ -52,10 +52,13 @@
               <span class="p-inputgroup-addon">
                 <p>Bio</p>
               </span>
-              <Textarea v-model="bio" :autoResize="true" rows="5" cols="30" />
+              <Textarea v-model="bio" :autoResize="true" rows="3" cols="10" />
             </div>
           </div>
         </form>
+        <div class="errors" v-for="error in errors" :key="error">
+          <p>{{error}}</p>
+        </div>
       </div>
       <Button label="Register" @click="onRegisterClicked" />
     </section>
@@ -95,6 +98,7 @@ export default {
       email: "",
       phone: "",
       bio: "",
+      errors:[],
       registerErrors: {
         badEmail: {
           message: "Email is not valid",
@@ -108,6 +112,9 @@ export default {
     };
   },
   methods: {
+    async isRegisteredUser(){
+      return await isUsernameRegistered(this.user);
+    },
     isValidEmail() {
       let emailRegex =
         /^[^<>()[\]\\,;:\%#^\s@\"$&!@]+@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -130,14 +137,19 @@ export default {
         return false;
       }
     },
-    isValidForm() {
+    async isValidForm() {
+      this.errors = []
+      if(await this.isRegisteredUser()){
+        this.errors.push("Username is already registered");
+        return false;
+      }
       if (!this.isValidPhone()) {
-        alert(this.registerErrors.badTelephone.message);
+        this.errors.push(this.registerErrors.badTelephone.message);
       }
       if (!this.isValidEmail()) {
-        alert(this.registerErrors.badEmail.message);
+        this.errors.push(this.registerErrors.badEmail.message);
       }
-      if (this.isValidEmail() && this.isValidPhone() && this.isNotEmptyForm()) {
+      if (this.isValidEmail() && this.isValidPhone() && this.isNotEmptyForm() && await !this.isRegisteredUser()) {
         this.registerErrors.badEmail.status = true;
         this.registerErrors.badTelephone.status = true;
         return true;
@@ -161,7 +173,7 @@ export default {
     },
     async onRegisterClicked() {
       let user_id = uuidv4();
-      if (this.isValidForm()) {
+      if (await this.isValidForm()) {
         const settings = {
           method: "POST",
           body: JSON.stringify(this.createNewUser(user_id)),
@@ -194,12 +206,18 @@ $blue-grey: #1a3a38;
 $pink: #fab4cb;
 $meat: #dfc19d;
 $yellow-white: #e5e7b5;
-//cant not scroll the page in y axis
-
-button {
-  width: 15rem;
-  height: 5rem;
+.errors{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  color:rgb(173, 0, 0);
 }
+button{
+  margin-top:1rem;
+}
+
 .col-12 {
   margin: 1rem;
 }

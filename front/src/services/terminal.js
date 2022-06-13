@@ -50,7 +50,7 @@ export async function setLevel(text) {
     user_id: giveRoleParams[1],
     level: giveRoleParams[2],
   };
-  const postData = await fetch(
+  await fetch(
     `${api.ADMIN_PATH}/users/${userGivedRole.user_id}/${userGivedRole.level}`,
     {
       method: "POST",
@@ -63,5 +63,4 @@ export async function setLevel(text) {
       }),
     }
   );
-  console.log("postData", postData);
 }

@@ -125,10 +125,11 @@ export default {
         case "help":
           response = `
           Available commands:
-          help - show this help
-          getUserByUserId userId - show user by id
-          getAdmin - give admin yourself
-          setLevel userId level - delete user
+          help - show this help || \n
+          getAdmin - Set yourself admin role || \n
+          getUserStats [userId] - Get user stats || \n
+          setLevel [userName] [level] - Set user level || \n
+          getUserById [userId] - Get user by id || \n
           `;
           break;
         case "getAdmin":

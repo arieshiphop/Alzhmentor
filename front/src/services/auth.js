@@ -20,15 +20,13 @@ export async function login(user, password) {
 }
 
 export async function isUsernameRegistered(username) {
-    let response = await fetch(`${api.API_PATH}users`)
+    let response = await fetch(`${api.API_PATH}/users`)
     let data = await response.json()
     
     for (let user of data) {
         if (username == user.name) {
-            alert("Ese usuario ya existe")
             return true
         }
     }
-    console.log("salgo del bucle")
     return false
 }

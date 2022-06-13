@@ -18,22 +18,10 @@ def create_app(repositories):
             return "", 401
         return user.to_dict(), 200
 
-    @ app.route("/", methods=["GET"])
-    def hello_world():
-        return "...magic!"
-
     @ app.route("/api/users", methods=["GET"])
     def users_get_all():
         all_users = repositories["users"].get_all()
         return object_to_json(all_users)
-
-    @app.route("/api/verify_code", methods=["GET"])
-    def send_code():
-        body = request.json
-        ms = Mail_Sender()
-        ms.generate_verify_code()
-        ms.receiver_emails.append(body["email"])
-        ms.send_email()
 
     @ app.route("/api/users", methods=["POST"])
     def register_user():
@@ -58,14 +46,11 @@ def create_app(repositories):
 
     @ app.route("/api/users/<id>", methods=["PUT"])
     def user_put(id):
-
         body = request.json
         body["id"] = id
         print(body)
         user = User(**body)
-
         repositories["users"].update_user(user)
-
         return "", 200
 
     @ app.route("/api/users/<id>", methods=["DELETE"])
@@ -105,8 +90,18 @@ def create_app(repositories):
     @app.route("/admin/users/<username>/<level>", methods=["POST"])
     def user_update_level(username, level):
         user = repositories["users"].get_by_username(username)
-        print(user)
+        print("USUARIO",user)
         user.level = level
         repositories["users"].update_user(user)
         return "", 200
+
+    @app.route("/api/users/byName/<username>", methods=["GET"])
+    def get_user_by_username(username):
+        user = repositories["users"].get_by_username(username)
+        if user is None:
+            return "", 404
+        return user.to_dict(), 200
+
     return app
+
+    
