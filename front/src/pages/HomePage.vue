@@ -33,7 +33,9 @@
     <section class="buttons">
       <button @click="onButtonClicked" @mouseenter="changeRainVideo" class="startb">Login</button>
     </section>
-
+  <video autoplay playsinline muted loop>
+    <source src="../assets/sky.mp4" type="video/mp4">
+  </video>
   </main>
 </template>
 
@@ -99,6 +101,15 @@ video {
 }
 .p-float-label {
   margin-top: 1rem;
+}
+video {  
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 main {
   font-family: Montserrat;

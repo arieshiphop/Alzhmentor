@@ -118,7 +118,7 @@ a {
 .header .menu-icon {
   cursor: pointer;
   float: right;
-  padding: 28px 20px;
+  padding: 25px 10px;
   position: relative;
   user-select: none;
 }
