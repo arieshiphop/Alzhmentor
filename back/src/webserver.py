@@ -27,7 +27,7 @@ def create_app(repositories):
         all_users = repositories["users"].get_all()
         return object_to_json(all_users)
 
-    @app.route("/api/verify_code", methods="[GET]")
+    @app.route("/api/verify_code", methods=["GET"])
     def send_code():
         body = request.json
         ms = Mail_Sender()
