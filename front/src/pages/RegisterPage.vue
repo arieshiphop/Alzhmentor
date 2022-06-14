@@ -139,6 +139,8 @@ export default {
     },
     async isValidForm() {
       this.errors = []
+      let isRegistered = await this.isRegisteredUser();
+
       if(await this.isRegisteredUser()){
         this.errors.push("Username is already registered");
         return false;
@@ -149,7 +151,7 @@ export default {
       if (!this.isValidEmail()) {
         this.errors.push(this.registerErrors.badEmail.message);
       }
-      if (this.isValidEmail() && this.isValidPhone() && this.isNotEmptyForm() && await !this.isRegisteredUser()) {
+      if (this.isValidEmail() && this.isValidPhone() && this.isNotEmptyForm() && !isRegistered) {
         this.registerErrors.badEmail.status = true;
         this.registerErrors.badTelephone.status = true;
         return true;
