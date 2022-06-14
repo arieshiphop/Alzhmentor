@@ -1,6 +1,7 @@
 <template>
   <NavBar></NavBar>
   <main>
+    <PagTitle title="Pay attention" />
     <h2 v-bind:class="{ cleared: disabledClass }">
       {{ randomNumber }}
     </h2>
@@ -17,11 +18,13 @@ import Swal from "sweetalert2";
 import Button from "primevue/button";
 import NavBar from "../components/NavBar.vue";
 import { addExperiencie } from "@/services/levels.js";
+import PagTitle from "../components/PagTitle.vue";
 export default {
   components: {
     Button,
     NavBar,
     InputText,
+    PagTitle,
   },
   data() {
     return {
@@ -81,7 +84,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 main {
   animation: puff-in 1s ease-out forwards;
   gap: 1.5rem;
@@ -96,6 +99,16 @@ main {
     opacity: 1;
   }
 }
+@import url("https://fonts.googleapis.com/css2?family=Wendy+One&display=swap");
+
+body {
+  font-family: "Wendy One", sans-serif;
+  background: #f7ca05;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
 main {
   display: flex;
   justify-content: center;
@@ -106,16 +119,8 @@ main {
 .cleared {
   display: none;
 }
-.p-chips {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  max-width: 20rem;
-}
-
-.p-chips-multiple-container {
-  display: flex;
-  flex-wrap: nowrap;
+p {
+  text-align: center;
+  width: 15rem;
 }
 </style>

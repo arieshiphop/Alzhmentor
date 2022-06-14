@@ -1,6 +1,7 @@
 <template>
   <NavBar></NavBar>
   <main>
+    <PagTitle title="Remember..." />
     <section class="main-container">
       <h1>{{ actualWord }}</h1>
       <InputText placeholder="Sentence" v-model="sentence" />
@@ -16,12 +17,14 @@ import Button from "primevue/button";
 import Swal from "sweetalert2";
 import { sendLogToProfile } from "@/services/logs.js";
 import { addExperiencie } from "@/services/levels.js";
+import PagTitle from "../components/PagTitle.vue";
 
 export default {
   components: {
     NavBar,
     InputText,
     Button,
+    PagTitle,
   },
   data() {
     return {

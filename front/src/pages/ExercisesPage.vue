@@ -10,7 +10,7 @@
           :key="exercise.name"
           @click="onExerciseClick(exercise)"
         >
-          <img :src="exercise.img" alt="{{exercise.name}}" />
+          <img lazy :src="exercise.img" alt="{{exercise.name}}" />
           <p>{{ exercise.name }}</p>
         </div>
       </article>
@@ -67,12 +67,6 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
-// main {
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-// }
 section {
   display: grid;
   place-content: center;
@@ -103,17 +97,17 @@ section {
   section {
     height: 100vh;
   }
+  section h1 {
+    font-size: 1.5rem;
+    width: 15rem;
+  }
   article {
     flex-direction: column;
     .redondel {
       display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
       margin-top: -1em;
       width: 100%;
-      height: 5rem;
-      font-size: 1.6rem;
+      height: 4rem;
       font-family: Montserrat;
       gap: 1.5rem;
       img {

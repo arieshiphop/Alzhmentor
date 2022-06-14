@@ -1,6 +1,7 @@
 <template>
   <NavBar></NavBar>
   <main>
+    <PagTitle title="Show me your lang" />
     <section>
       <article>
         <h2>
@@ -22,12 +23,14 @@ import InputText from "primevue/inputtext";
 import Button from "primevue/button";
 import Swal from "sweetalert2";
 import { sendLogToProfile } from "@/services/logs.js";
+import PagTitle from "../components/PagTitle.vue";
 
 export default {
   components: {
     NavBar,
     InputText,
     Button,
+    PagTitle,
   },
   data() {
     return {

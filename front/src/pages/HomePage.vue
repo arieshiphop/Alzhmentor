@@ -2,12 +2,7 @@
   <NavBar></NavBar>
   <main>
     <section class="first-content">
-      <p>
-        Recently, there have been many people who have witnessed their loved
-        ones suffering from Alzheimer's and other forms of dementia. Through a
-        web application, we will try to help them by training their brain and
-        memory.
-      </p>
+      <h1>Alzhmentor</h1>
       <form class="field">
         <span class="p-float-label">
           <InputText
@@ -31,11 +26,17 @@
       <router-link to="/register">Not registered yet? Register</router-link>
     </section>
     <section class="buttons">
-      <button @click="onButtonClicked" @mouseenter="changeRainVideo" class="startb">Login</button>
+      <button
+        @click="onButtonClicked"
+        @mouseenter="changeRainVideo"
+        class="startb"
+      >
+        Login
+      </button>
     </section>
-  <video autoplay playsinline muted loop>
-    <source src="../assets/sky.mp4" type="video/mp4">
-  </video>
+    <video lazy autoplay playsinline muted loop>
+      <source src="../assets/sky.webm" type="video/webm" />
+    </video>
   </main>
 </template>
 
@@ -60,11 +61,6 @@ export default {
     };
   },
   methods: {
-    changeRainVideo() {
-      document.getElementById("bgvid").getElementsByTagName("source")[
-        SourceIndex
-      ].src = "../assets/sky.mp4";
-    },
     async onButtonClicked() {
       const response = await login(this.user, this.password);
 
@@ -81,7 +77,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
@@ -102,14 +97,13 @@ video {
 .p-float-label {
   margin-top: 1rem;
 }
-video {  
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: -1;
+h1 {
+  font-size: 4rem;
+  text-decoration-line: underline;
+  text-decoration-style: "solid";
+  text-decoration-color: rgba(232, 54, 0, 1);
+  text-decoration-thickness: 10px;
+  transform: skew(10deg);
 }
 main {
   font-family: Montserrat;
@@ -162,9 +156,9 @@ button:hover {
     gap: 2rem;
   }
   main .first-content {
-    height: 90vh;
+    height: 65vh !important;
     h1 {
-      font-size: 0.3rem;
+      font-size: 3rem;
     }
 
     p {

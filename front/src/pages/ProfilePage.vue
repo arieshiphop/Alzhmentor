@@ -180,7 +180,7 @@ export default {
 };
 </script>
 
-<style  scoped>
+<style scoped>
 @import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Bree+Serif&display=swap");
 * {
@@ -202,13 +202,6 @@ button {
   font-weight: bold;
   color: #000;
   cursor: pointer;
-}
-.stats-container {
-  width: 100%;
-}
-.stats-container .p-chart {
-  width: 100%;
-  height: 40vh;
 }
 
 .log-container {
@@ -249,7 +242,7 @@ button {
 
 .profile-img img {
   border-radius: 50%;
-  height: 30vh;
+  height: auto;
   width: 15vw;
   border: 5px solid #fff;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
@@ -314,7 +307,6 @@ button {
 .main-bd {
   width: 100%;
   display: flex;
-  padding-right: 15px;
 }
 .right-side {
   width: 100%;

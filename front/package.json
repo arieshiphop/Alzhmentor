@@ -7,7 +7,6 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^1.35.2",
     "@vuelidate/core": "^2.0.0-alpha.39",
     "@vuelidate/validators": "^2.0.0-alpha.28",
     "@vueuse/core": "^8.1.2",
@@ -15,11 +14,12 @@
     "core-js": "^3.6.5",
     "primeicons": "^5.0.0",
     "primevue": "^3.12.2",
-    "sass-loader": "^13.0.0",
+    "sass-loader": "^10.1.1",
     "sweetalert2": "^11.4.7",
     "uuid": "^8.3.2",
     "vue": "^3.0.0",
     "vue-chartkick": "^1.1.0",
+    "vue-lazyload": "^3.0.0-rc.2",
     "vue-router": "^4.0.0-0",
     "webpack": "^4.39.3"
   },
@@ -28,8 +28,7 @@
     "@vue/cli-plugin-router": "~4.5.15",
     "@vue/cli-service": "~4.5.15",
     "@vue/compiler-sfc": "^3.0.0",
-    "sass": "^1.26.5",
-    "sass-loader": "^8.0.2"
+    "sass": "^1.52.3"
   },
   "browserslist": [
     "> 1%",

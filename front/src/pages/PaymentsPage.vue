@@ -2,6 +2,7 @@
   <NavBar></NavBar>
   <main>
     <section>
+      <PagTitle title="Give me your money..." />
       <h1>Money to pay: {{ startMoney }} 💵</h1>
       <h2>Paid money: {{ givedMoney }} 💸</h2>
 
@@ -30,12 +31,14 @@ import Swal from "sweetalert2";
 import Button from "primevue/button";
 import Dock from "primevue/dock";
 import { addExperiencie } from "../services/levels.js";
+import PagTitle from "../components/PagTitle.vue";
 
 export default {
   components: {
     NavBar,
     Button,
     Dock,
+    PagTitle,
   },
   data() {
     return {
@@ -113,14 +116,22 @@ section {
   border: 2px solid black;
   border-radius: 5px;
   margin-top: 2rem;
-  display:flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(25rem, 5rem), 1fr));
+  width: 80%;
+  background: rgb(130, 122, 122);
+  background: linear-gradient(
+    45deg,
+    rgba(130, 122, 122, 1) 0%,
+    rgba(221, 214, 214, 1) 100%
+  );
   div {
     width: 5rem;
 
     img {
       object-fit: cover;
       width: 100%;
-      height: 4rem;
+      height: 3rem;
     }
     img:hover {
       cursor: pointer;
