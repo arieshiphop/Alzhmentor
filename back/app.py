@@ -7,10 +7,10 @@ from src.domain.logs import LogsRepository
 database_path = "data/database.db"
 
 repositories = {
-    "logs":LogsRepository(database_path),
+    "logs": LogsRepository(database_path),
     "users": UserRepository(database_path),
 }
 
 app = create_app(repositories)
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
