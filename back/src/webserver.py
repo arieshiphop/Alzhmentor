@@ -3,7 +3,6 @@ from flask_cors import CORS
 from src.lib.utils import object_to_json
 from src.domain.logs import Log
 from src.domain.user import User
-from src.services.MailSender import *
 
 
 def create_app(repositories):
@@ -30,7 +29,7 @@ def create_app(repositories):
             id=body['id'],
             name=body['name'],
             password=body['password'],
-            avatar= body['avatar'] if body['avatar'] !='' else "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
+            avatar=body['avatar'] if body['avatar'] != '' else "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y",
             email=body['email'],
             phone=body['phone'],
             bio=body['bio']
@@ -90,7 +89,7 @@ def create_app(repositories):
     @app.route("/admin/users/<username>/<level>", methods=["POST"])
     def user_update_level(username, level):
         user = repositories["users"].get_by_username(username)
-        print("USUARIO",user)
+        print("USUARIO", user)
         user.level = level
         repositories["users"].update_user(user)
         return "", 200
@@ -103,5 +102,3 @@ def create_app(repositories):
         return user.to_dict(), 200
 
     return app
-
-    
